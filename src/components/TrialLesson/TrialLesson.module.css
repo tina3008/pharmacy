@@ -1,0 +1,93 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 30px;
+  width: 599px;
+  font-family: var(--font-family);
+  color: var(--text-color-main);
+  position: relative;
+  padding: 64px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.imgClosed {
+  stroke: var(--text-color-main);
+  background: none;
+}
+.title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  color: rgba(18, 20, 23, 0.8);
+  margin-bottom: 20px;
+}
+
+.teacher {
+  display: inline-flex;
+  column-gap: 14px;
+  margin-bottom: 40px;
+}
+.avatar {
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+}
+
+.teacherName {
+  display: block;
+}
+.yurTeacher {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: #8a8a89;
+  margin-bottom: 4px;
+}
+.name {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.question {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.33333;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .modalContent {
+    max-width: 320px;
+    padding: 64px 10px;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+}

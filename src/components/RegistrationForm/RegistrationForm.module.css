@@ -1,0 +1,119 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.registrationPopUp {
+  display: block;
+  width: 566px;
+  border-radius: 30px;
+  background: var(--text-color-white);
+  padding: 64px;
+  font-family: var(--font-family);
+  color: var(--text-color-main);
+  position: fixed;
+}
+.regTitle {
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.regTxt {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  color: rgba(18, 20, 23, 0.8);
+  margin-bottom: 40px;
+}
+
+.btn {
+  background-color: var(--color1);
+  border: none;
+  border-radius: 12px;
+  padding: 16px 16px;
+  width: 100%;
+  height: 60px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.55556;
+}
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background-color: var(--color11);
+  overhidden: none;
+}
+
+.errorMessage {
+  color: red;
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
+.fieldPosition {
+  display: inherit;
+  width: 100%;
+  position: relative;
+}
+.fialdStyle {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 18px;
+  margin-bottom: 40px;
+}
+
+.field {
+  border: 1px solid rgba(18, 20, 23, 0.1);
+  border-radius: 12px;
+  padding: 16px 18px;
+  height: 54px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  background-color: transparent;
+  width: 100%;
+}
+
+.field:hover,
+.field:focus,
+.field:active {
+  background-color: #fff;
+  outline: none;
+    border: 1px solid rgba(18, 20, 23, 0.1);
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  background: none;
+  stroke: var(--text-color-main);
+  border: transparent;
+  owerhidden: none;
+}
+
+@media screen and (max-width: 767px) {
+  .registrationPopUp {
+    display: block;
+    max-width: 320px;
+    border-radius: 30px;
+    background: var(--text-color-white);
+    padding: 64px 12px;
+    font-family: var(--font-family);
+    color: var(--text-color-main);
+    position: fixed;
+  }
+}

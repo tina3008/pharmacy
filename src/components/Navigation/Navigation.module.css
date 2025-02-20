@@ -1,0 +1,156 @@
+.header {
+  display: block;
+  margin: 20px auto;
+}
+.wrapper {
+  display: flex;
+  padding: 20px 10px;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-family);
+  color: var(--text-color-main);
+  letter-spacing: -0.02em;
+ 
+}
+.fixedWrapper {
+  position: fixed;
+  background: var(--text-color-white);
+  z-index: 1000;
+width: 320px;
+align-items: center;
+justify-content: space-between;
+}
+.logo {
+  display: inline-flex;
+  column-gap: 8px;
+  transition: transform 0.3s ease;
+}
+.logo:hover,
+.logo:focus {
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+
+.logoTxt {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.container {
+  display: inline-flex;
+  column-gap: 28px;
+  width: 220px;
+  justify-content: center;
+}
+
+.autentification {
+  display: inline-flex;
+  align-items: center;
+}
+
+.link {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  transition: transform 0.3s ease;
+  display: inline-flex;
+}
+
+.link:hover,
+.link:focus {
+  background-color: transparent;
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+.active {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.placeholder {
+  visibility: hidden;
+}
+
+.authName {
+  max-width: 80px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 767px) {
+  .no-scroll {
+    overflow: hidden;
+  }
+  .header {
+    max-width: 320px;
+    justify-content: space-between;
+  }
+  .burgerBtn {
+    display: flex;
+    fill: var(--text-color-main);
+    border: none;
+    padding: 0;
+    background: transparent;
+    transition: transform 0.3s ease;
+  }
+  .burgerBtn:hover,
+  .burgerBtn:focus,
+  .burgerBtn:active {
+    background: transparent;
+    transform: scale(1.1);
+  }
+
+  .xImage {
+    stroke: var(--text-color-main);
+  }
+  .container {
+    display: none;
+  }
+  .autentification {
+    display: none;
+  }
+  .registrationBtn {
+    display: none;
+  }
+
+  .wrapper {
+  height: 48px;
+}
+}
+@media screen and (min-width: 768px) {
+  .header {
+    width: 705px;
+  }
+  .burgerBtn {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .header {
+    width: 1204px;
+  }
+  .logo {
+    margin-right: 128px;
+  }
+  .authName {
+  max-width: 380px;
+}
+}

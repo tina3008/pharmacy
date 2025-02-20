@@ -1,0 +1,241 @@
+.homeContainer {
+  display: block;
+  background-size: cover;
+  width: 100%;
+  /* height: 100%; */
+  font-family: var(--font-family);
+  color: var(--text-color-main);
+  margin: 0 auto 32px auto;
+  
+}
+.homeMain {
+  display: flex;
+}
+
+@keyframes colorChangeLite {
+  0%,
+  100% {
+    background: var(--color2);
+  }
+  20% {
+    background: var(--color4);
+  }
+  40% {
+    background: var(--color6);
+  }
+  60% {
+    background: var(--color8);
+  }
+  80% {
+    background: var(--color10);
+  }
+}
+
+@keyframes colorChangeDark {
+  0%,
+  100% {
+    background: var(--color1);
+  }
+  20% {
+    background: var(--color3);
+  }
+  40% {
+    background: var(--color5);
+  }
+  60% {
+    background: var(--color7);
+  }
+  80% {
+    background: var(--color9);
+  }
+}
+
+@keyframes colorChangeBorder {
+  0%,
+  100% {
+    border-color: var(--color1);
+  }
+  20% {
+    border-color: var(--color3);
+  }
+  40% {
+    border-color: var(--color5);
+  }
+  60% {
+    border-color: var(--color7);
+  }
+  80% {
+    border-color: var(--color9);
+  }
+}
+.animateColorLite {
+  animation: colorChangeLite 20s infinite;
+}
+.animateColorDark {
+  animation: colorChangeDark 20s infinite;
+}
+
+.animateColorBorder {
+  animation: colorChangeBorder 20s infinite;
+}
+.homeImg {
+  border-radius: 30px;
+  background-color: var(--color2);
+  animation: colorChangeLite 10s infinite;
+}
+.homeText {
+  border-radius: 30px;
+  width: 720px;
+  background: #f8f8f8;
+  border: none;
+  display: block;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.16667;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+.txtAccent {
+  font-style: italic;
+  font-weight: 400;
+  background-color: var(--color2);
+  animation: colorChangeLite 10s infinite;
+}
+
+.txtHome {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  letter-spacing: -0.02em;
+  margin-bottom: 64px;
+}
+
+.homeBtn {
+  border-radius: 12px;
+  padding: 16px 88px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.55556;
+  color: var(--text-color-main);
+  border: none;
+  background-color: var(--color1);
+  animation: colorChangeDark 10s infinite;
+  margin-bottom: 98px;
+}
+.homeBtn:hover,
+.homeBtn:focus {
+  background: var(--color11);
+  animation: none;
+    border: none;
+  overflow: none;
+}
+
+.homeFooter {
+  border-radius: 30px;
+  margin-top: 24px;
+  padding: 40px;
+  border: 2px dashed var(--color1);
+  animation: colorChangeBorder 10s infinite;
+}
+
+@media screen and (max-width: 767px) {
+  .homeContainer {
+    max-width: 320px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .homeMain {
+    flex-direction: column;
+    row-gap: 24px;
+  }
+  .homeText {
+    max-width: 300px;
+    padding: 24px 10px 48px 10px;
+  }
+  .title {
+    max-width: 300px;
+    text-align: center;
+  }
+  .txtHome {
+    text-align: center;
+  }
+  .homeBtn {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .homeFooter {
+    max-width: 300px;
+    padding: 20px 12px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .homeContainer {
+    width: 740px;
+    padding: 0 10px;
+  }
+  .homeMain {
+    flex-direction: column;
+    row-gap: 24px;
+  }
+  .homeText {
+    display: flex;
+    padding: 98px 64px 0 64px;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .title {
+    width: 548px;
+    margin-bottom: 32px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .txtHome {
+    width: 471px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .homeBtn {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .homeFooter {
+    width: 740px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .homeContainer {
+    width: 1332px;
+    padding: 0 10px;
+  }
+  .homeMain {
+    flex-direction: row;
+    column-gap: 24px;
+  }
+
+  .homeFooter {
+    width: 1312px;
+    padding: 40px 123px;
+  }
+  .title {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .txtHome {
+    text-align: left;
+    margin-left: 0;
+  }
+  .homeBtn {
+    margin-left: 0;
+  }
+}
