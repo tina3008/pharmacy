@@ -1,37 +1,53 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchCategories } from "../words/operations";
 
 const filterSlice = createSlice({
   name: "filters",
   initialState: {
     values: {
-      languages: "French",
-      levels: "A1 Beginner",
-      price_per_hour: "30",
+      category: "",
+      en: " ",
+      ua: " ",
+      isIrregular: "",
     },
-    favorites: JSON.parse(localStorage.getItem("favorites")) || [],
+    pageType: "dictionary",
   },
   reducers: {
     setStatusFilter: (state, action) => {
       state.values = { ...state.values, ...action.payload };
     },
-
-    addToFavorites(state, action) {
-      const id = action.payload;
-      if (!state.favorites.includes(id)) {
-        state.favorites.push(id);
-        localStorage.setItem("favorites", JSON.stringify(state.favorites));
-      }
-    },
-    removeFromFavorites(state, action) {
-      const id = action.payload; 
-      state.favorites = state.favorites.filter(
-        (favoriteId) => favoriteId !== id
-      );
-      localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    setPageType: (state, action) => {
+      state.pageType = action.payload; 
     },
   },
 });
 
-export const { setStatusFilter, removeFromFavorites, addToFavorites } =
-  filterSlice.actions;
+const categoriesSlice = createSlice({
+  name: "categories",
+  initialState: {
+    categories: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCategories.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categories = action.payload;
+        state.loading = false;  
+        
+      })
+      .addCase(fetchCategories.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      });
+  },
+});
+
+export const { setStatusFilter, setCategory, setPageType } = filterSlice.actions;
 export const filterReducer = filterSlice.reducer;
+export const categoriesReducer = categoriesSlice.reducer;

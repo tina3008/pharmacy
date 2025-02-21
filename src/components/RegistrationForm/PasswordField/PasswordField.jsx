@@ -1,11 +1,11 @@
 import css from "./PasswordField.module.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Field } from "formik";
 import { useState } from "react";
-import { GoEye } from "react-icons/go";
 import { FiEye } from "react-icons/fi";
 import { FiEyeOff } from "react-icons/fi";
+import CustomMessage from "../CustomMessage/CustomMessage";
 
-export default function PasswordField() {
+export default function PasswordField({ errors, touched }) {
   const [eyeOpen, setEyeOpen] = useState(true);
 
   const handleEyeToggle = () => {
@@ -14,45 +14,28 @@ export default function PasswordField() {
 
   return (
     <div className={css.eyerelative}>
-      {eyeOpen ? (
-        <>
-          <button
-            type="button"
-            className={css.btnEye}
-            onClick={handleEyeToggle}
-          >
-            <FiEyeOff size={19} className={css.eye} />
-          </button>
-          <Field
-            type="password"
-            name="password"
-            className={css.field}
-            placeholder="Password"
-          />
-        </>
-      ) : (
-        <>
-          <button
-            type="button"
-            className={css.btnEye}
-            onClick={handleEyeToggle}
-          >
-            <FiEye size={19} className={css.eye} />
-          </button>
-          <Field
-            type="text"
-            name="password"
-            className={css.field}
-            placeholder="Password"
-          />
-        </>
-      )}
+      <button type="button" className={css.btnEye} onClick={handleEyeToggle}>
+        {eyeOpen ? (
+          <FiEyeOff size={19} className={css.eye} />
+        ) : (
+          <FiEye size={19} className={css.eye} />
+        )}
+      </button>
 
-      <ErrorMessage
+      <Field
+        type={eyeOpen ? "password" : "text"}
         name="password"
-        className={css.errorMessage}
-        component="span"
+        className={`${css.field} ${
+          errors && touched
+            ? css.errorField
+            : touched && !errors
+            ? css.successField
+            : ""
+        }`}
+        placeholder="Password"
       />
+
+      <CustomMessage name="password" errors={errors} touched={touched} />
     </div>
   );
 }

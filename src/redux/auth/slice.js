@@ -1,16 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logIn, logOut, refreshUser, register } from "./operations";
+import {
+  login,
+  logOut,
+  refreshUser,
+  register,
+  getUserInfo,
+} from "./operations";
+
+const initialToken = localStorage.getItem("token");
+const initialUser = JSON.parse(localStorage.getItem("user"));
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: {
       name: null,
+      phone: null,
       email: null,
     },
-    token: null,
+    token: initialToken || null,
     refreshToken: null,
-    isLoggedIn: false,
+    isLoggedin: !!initialToken,
     isLoading: false,
     isRefreshing: false,
   },
@@ -21,25 +31,30 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.idToken;
+        state.token = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.isLoading = false;
-        state.isLoggedIn = true;
+        state.isLoggedin = true;
       })
-      .addCase(logIn.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.idToken;
-        state.refreshToken = action.payload.refreshToken;
-        state.isLoggedIn = true;
+        state.token = action.payload.data.accessToken;
+        state.isLoggedin = true;
+        console.log("state.token", state.token);
       })
+      // .addCase(getUserInfo.fulfilled, (state, action) => {
+      //   console.log("action.payload.user", action.payload.user);
+        
+      //   state.user = action.payload.user;    
+      // })
+
       .addCase(logOut.fulfilled, (state) => {
         state.user = {
           name: null,
           email: null,
         };
         state.token = null;
-
-        state.isLoggedIn = false;
+        state.isLoggedin = false;
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
@@ -47,8 +62,21 @@ const authSlice = createSlice({
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload;
 
-        state.isLoggedIn = true;
+        state.isLoggedin = true;
         state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        if (action.error.code === "ERR_BAD_REQUEST") {
+          state.user = {
+            name: null,
+            email: null,
+          };
+          state.token = null;
+          state.isLoggedin = false;
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+        }
       }),
 });
 

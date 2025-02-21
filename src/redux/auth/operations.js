@@ -1,14 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signOut,
-} from "firebase/auth";
-import { authFirebase } from "../../firebase/firebase";
-const API_KEY = "AIzaSyCkxPo19SKC6V2-8LbTZ2GtxLW5CqWoePs";
+
+axios.defaults.baseURL = "https://pharmacy-backend-szji.onrender.com";
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -21,52 +14,25 @@ const clearAuthHeader = () => {
 export const register = createAsyncThunk(
   "auth/register",
   async (newUser, thunkAPI) => {
-    const { email, password, name } = newUser;
-    const auth = authFirebase;
-
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      await updateProfile(user, { displayName: name });
-      const idToken = await userCredential.user.getIdToken(); 
-      setAuthHeader(idToken);
-  
-      return {
-        idToken: idToken,
-        uid: user.uid,
-        email: user.email,
-        displayName: name, 
-      };
+      const res = await axios.post("/user/register", newUser);
+      setAuthHeader(res.data.token);
+      return res.data;
     } catch (error) {
-      console.error("Error registering user:", error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-
-export const logIn = createAsyncThunk(
+export const login = createAsyncThunk(
   "auth/login",
   async (userInfo, thunkAPI) => {
     try {
-      const auth = getAuth();
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        userInfo.email,
-        userInfo.password
-      );
-      const idToken = await userCredential.user.getIdToken();
-
-      setAuthHeader(idToken);
-      return {
-        idToken,
-        email: userCredential.user.email,
-        displayName: userCredential.user.displayName,
-      };
+      const res = await axios.post("/user/login", userInfo);
+      console.log("res.data.data.token", res.data);
+      
+      setAuthHeader(res.data.data.accessToken);
+      return res.data;      
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -75,29 +41,71 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    const auth = getAuth();
-    await signOut(auth);
-    localStorage.removeItem("persist:root");
+    await axios.post("/user/logout");
     clearAuthHeader();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
 
-export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+export const getUserInfo = createAsyncThunk(
+  "auth/user-info",
   async (_, thunkAPI) => {
-    const reduxState = thunkAPI.getState();
-    setAuthHeader(reduxState.auth.token);
-    const res = await axios.get("/users/current");
-
-    return res.data;
-  },
-  {
-    condition(_, thunkAPI) {
-      const reduxState = thunkAPI.getState();
-
-      return reduxState.auth.token !== null;
-    },
+    try {
+      const res = await axios.get("/user/user-info");
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
 );
+
+// export const refreshUser = createAsyncThunk(
+//   "auth/refresh",
+//   async (_, thunkAPI) => {
+//     const reduxState = thunkAPI.getState();
+//     console.log("refresh reduxState", reduxState);
+//     setAuthHeader(reduxState.auth.token);
+//     // const res = await axios.post("/user/refresh");
+//     const res = await axios.post(
+//       "/user/refresh",
+//       {},
+//       {
+//         withCredentials: true,
+//       }
+//     );
+//     console.log("refresh", res);
+    
+//     return res.data;
+//   },
+//   {
+//     condition(_, thunkAPI) {
+//       const reduxState = thunkAPI.getState();
+
+//       return reduxState.auth.token !== null;
+//     },
+//   }
+// );
+
+export const refreshSession = async ({ sessionId, refreshToken }) => {
+  const session = await SessionsCollections.findOne({
+    _id: sessionId,
+    refreshToken,
+  });
+
+  if (!session) {
+    throw createHttpError(401, "Session not found");
+  }
+
+  if (new Date() > new Date(session.refreshTokenValidUntil)) {
+    throw createHttpError(401, "Session token expired");
+  }
+  const newSession = await SessionsCollections.create({
+    userId: session.userId,
+    ...createSession(),
+  });
+
+  await SessionsCollections.deleteOne({ _id: sessionId });
+
+  return newSession;
+};

@@ -1,28 +1,61 @@
-import { authFirebase } from "../../firebase/firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import React, { useEffect, useState } from "react";
-import css from "./Navigation.module.css";
+import css from "./Navigation.module.css;
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../../redux/auth/selectors";
+import { logOut } from "../../../redux/auth/operations";
+import { useEffect, useState } from "react";
 
-export default function AuthFound() {
-  const [userName, setUserName] = useState("");
+export default function AuthFound({ context }) {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const [displayName, setDisplayName] = useState("");
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(authFirebase, (user) => {
-      if (user) {
-        setTimeout(() => {
-          setUserName(user.displayName || "Unknown User");
-        }, 500);
-      } else {
-        setUserName("");
-      }
-    });
+    if (user?.name) {
+      const timer = setTimeout(() => {
+        setDisplayName(user.name);
+      }, 1000);
 
-    return () => unsubscribe();
-  }, []);
+      return () => clearTimeout(timer);
+    }
+  }, [user?.name]);
 
   return (
-    <div>
-      {userName && <p className={css.authName}>Welcome,<br/>{userName}!</p>}
+    <div className={css.wrapper}>
+      <div className={css.userConeiner}>
+        <p
+          className={
+            context === "BurgerMenu" ? css.usernamerBurger : css.username
+          }
+        >
+          {displayName}
+        </p>
+        <div
+          className={
+            context === "BurgerMenu" ? css.userImageFonBurger : css.userImageFon
+          }
+        >
+          <svg
+            className={
+              context === "BurgerMenu" ? css.userImageBurger : css.userImage
+            }
+            width="24"
+            height="24"
+          >
+            <use href="/sprite.svg#icon-user" />
+          </svg>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        className={css.btn}
+        onClick={() => dispatch(logOut())}
+      >
+        Log out
+        <svg className={css.array} width="16" height="16">
+          <use href="/sprite.svg#icon-arrow"></use>
+        </svg>
+      </button>
     </div>
   );
 }

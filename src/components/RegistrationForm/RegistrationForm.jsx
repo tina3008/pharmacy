@@ -1,147 +1,143 @@
 import css from "./RegistrationForm.module.css";
-import toast, { Toaster } from "react-hot-toast";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { register } from "../../redux/auth/operations";
-import { closeModal } from "../../redux/modal/slice";
-import { selectActiveModal } from "../../redux/modal/selectors";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import PasswordField from "./PasswordField/PasswordField";
+import { NavLink } from "react-router-dom";
+import CustomMessage from "./CustomMessage/CustomMessage";
+import { useNavigate } from "react-router-dom";
+import { showSuccess, showError } from "../ToastComponent/ToastComponent.jsx";
+
+const validationControl = Yup.object().shape({
+  name: Yup.string()
+    .min(3, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  email: Yup.string()
+    .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "Invalid email format")
+    .min(3, " Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  phone: Yup.string()
+    .matches(/^[+\d][\d\s()-]*$/, "Invalid phone format")
+    .min(3, " Too Short!")
+    .max(15, "Too Long!")
+    .required("Required"),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[a-zA-Z]{6})(?=.*\d)[a-zA-Z\d]{7}$/,
+      "Invalid password format"
+    )
+    .min(5, "Too short")
+    .max(18, "Too long")
+    .required("Required"),
+});
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
-
-  const validationControl = Yup.object().shape({
-    name: Yup.string()
-      .min(3, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    email: Yup.string()
-      .min(3, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    password: Yup.string()
-      .min(5, "Too short")
-      .max(18, "Too long")
-      .required("Required"),
-  });
-
-  const activeModal = useSelector(selectActiveModal);
-
-  const handleClose = () => {
-    dispatch(closeModal());
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        handleClose();
-      }
-    };
-
-    if (activeModal) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    }
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [activeModal]);
-
-  if (activeModal !== "registration") return null;
-
+  const navigate = useNavigate();
   const handleSubmit = (values, actions) => {
     dispatch(register(values))
       .unwrap()
-      .then((data) => {
-        toast.success("Registration successful!", {
-          style: { background: "white", color: "black" },
-          position: "top-center",
-        });
+      .then((data) => {      
+         showSuccess({ message: "Registration successful!" });
         actions.resetForm();
-        handleClose();
+        navigate("/shop");
       })
       .catch((err) => {
-        toast(`Registration failed: ${err.toString()}`, {
-          style: { background: "red" },
-          containerStyle: {
-            top: 150,
-            left: 20,
-            bottom: 20,
-            right: 20,
-          },
-        });
+           showError({ message: `Registration failed: ${err.toString()}` });      
       });
   };
 
-  const handleBackdropClick = (event) => {
-    if (event.target === event.currentTarget) {
-      handleClose();
-    }
-  };
-
   return (
-    <div className={css.modalOverlay} onClick={handleBackdropClick}>
-      <div className={css.registrationPopUp}>
-        <button className={css.closeButton} onClick={handleClose}>
-          <svg width="32" height="32" className={css.imgClosed}>
-            <use href="/sprite.svg#icon-x"></use>
-          </svg>
-        </button>
-        <h2 className={css.regTitle}>Registration</h2>
-        <p className={css.regTxt}>
-          Thank you for your interest in our platform! In order to register, we
-          need some information. Please provide us with the following
-          information
-        </p>
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            password: "",
-          }}
-          onSubmit={handleSubmit}
-          validationSchema={validationControl}
-        >
+    <div className={css.registrationForm}>
+      <Formik
+        initialValues={{
+          name: "",
+          email: "",
+          phone: "",
+          password: "",
+        }}
+        onSubmit={handleSubmit}
+        validationSchema={validationControl}
+      >
+        {({ errors, touched }) => (
           <Form className={css.form} autoComplete="off">
             <div className={css.fialdStyle}>
               <div className={css.fieldPosition}>
                 <Field
                   type="text"
                   name="name"
-                  className={css.field}
-                  placeholder="Name"
+                  placeholder="User Name"
+                  className={`${css.field} ${
+                    errors.name && touched.name
+                      ? css.errorField
+                      : touched.name && !errors.name
+                      ? css.successField
+                      : ""
+                  }`}
                 />
-                <ErrorMessage
+                <CustomMessage
                   name="name"
-                  className={css.errorMessage}
-                  component="span"
+                  errors={errors.name}
+                  touched={touched.name}
                 />
               </div>
               <div className={css.fieldPosition}>
                 <Field
                   type="email"
                   name="email"
-                  className={css.field}
-                  placeholder="Email"
+                  className={`${css.field} ${
+                    errors.email && touched.email
+                      ? css.errorField
+                      : touched.email && !errors.email
+                      ? css.successField
+                      : ""
+                  }`}
+                  placeholder="Email address"
                 />
-                <ErrorMessage
+                <CustomMessage
                   name="email"
-                  className={css.errorMessage}
-                  component="span"
+                  errors={errors.email}
+                  touched={touched.email}
                 />
               </div>
-              <PasswordField />
+              <div className={css.fieldPosition}>
+                <Field
+                  type="text"
+                  name="phone"
+                  placeholder="Phone number"
+                  className={`${css.field} ${
+                    errors.phone && touched.phone
+                      ? css.errorField
+                      : touched.name && !errors.phone
+                      ? css.successField
+                      : ""
+                  }`}
+                />
+                <CustomMessage
+                  name="phone"
+                  errors={errors.phone}
+                  touched={touched.phone}
+                />
+              </div>
+              <PasswordField
+                errors={errors.password}
+                touched={touched.password}
+              />
             </div>
             <button type="submit" className={css.btn}>
-              Sign Up
+              Register
             </button>
             <Toaster />
           </Form>
-        </Formik>
-      </div>
+        )}
+      </Formik>
+      <NavLink to="/login" className={css.switchPageBtn}>
+        Already have an account?
+      </NavLink>
     </div>
   );
 }
