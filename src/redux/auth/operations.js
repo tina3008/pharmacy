@@ -60,52 +60,52 @@ export const getUserInfo = createAsyncThunk(
   }
 );
 
-// export const refreshUser = createAsyncThunk(
-//   "auth/refresh",
-//   async (_, thunkAPI) => {
-//     const reduxState = thunkAPI.getState();
-//     console.log("refresh reduxState", reduxState);
-//     setAuthHeader(reduxState.auth.token);
-//     // const res = await axios.post("/user/refresh");
-//     const res = await axios.post(
-//       "/user/refresh",
-//       {},
-//       {
-//         withCredentials: true,
-//       }
-//     );
-//     console.log("refresh", res);
+export const refreshUser = createAsyncThunk(
+  "auth/refresh",
+  async (_, thunkAPI) => {
+    const reduxState = thunkAPI.getState();
+    console.log("refresh reduxState", reduxState);
+    setAuthHeader(reduxState.auth.token);
+    //  const res = await axios.post("/user/refresh");
+    const res = await axios.post(
+      "/user/refresh",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    console.log("refresh", res);
     
-//     return res.data;
-//   },
-//   {
-//     condition(_, thunkAPI) {
-//       const reduxState = thunkAPI.getState();
+    return res.data;
+  },
+  {
+    condition(_, thunkAPI) {
+      const reduxState = thunkAPI.getState();
 
-//       return reduxState.auth.token !== null;
-//     },
+      return reduxState.auth.token !== null;
+    },
+  }
+);
+
+// export const refreshSession = async ({ sessionId, refreshToken }) => {
+//   const session = await SessionsCollections.findOne({
+//     _id: sessionId,
+//     refreshToken,
+//   });
+
+//   if (!session) {
+//     throw createHttpError(401, "Session not found");
 //   }
-// );
 
-export const refreshSession = async ({ sessionId, refreshToken }) => {
-  const session = await SessionsCollections.findOne({
-    _id: sessionId,
-    refreshToken,
-  });
+//   if (new Date() > new Date(session.refreshTokenValidUntil)) {
+//     throw createHttpError(401, "Session token expired");
+//   }
+//   const newSession = await SessionsCollections.create({
+//     userId: session.userId,
+//     ...createSession(),
+//   });
 
-  if (!session) {
-    throw createHttpError(401, "Session not found");
-  }
+//   await SessionsCollections.deleteOne({ _id: sessionId });
 
-  if (new Date() > new Date(session.refreshTokenValidUntil)) {
-    throw createHttpError(401, "Session token expired");
-  }
-  const newSession = await SessionsCollections.create({
-    userId: session.userId,
-    ...createSession(),
-  });
-
-  await SessionsCollections.deleteOne({ _id: sessionId });
-
-  return newSession;
-};
+//   return newSession;
+// };

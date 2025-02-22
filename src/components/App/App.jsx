@@ -7,7 +7,7 @@ import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Navigation from "../Navigation/Navigation.jsx";
 import Loader from "../Loader/Loader.jsx";
-import { selectLoading, selectError } from "../../redux/words/selectors.js";
+// import { selectLoading, selectError } from "../../redux/words/selectors.js";
 import { HelmetProvider } from "react-helmet-async";
 import { refreshUser } from "../../redux/auth/operations.js";
 import { selectIsRefreshing } from "../../redux/auth/selectors.js";
@@ -38,7 +38,7 @@ const EditShopPage = lazy(() =>
 
 export default function App() {
   const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
+  // const loading = useSelector(selectLoading);
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
@@ -53,13 +53,13 @@ export default function App() {
     <div>
       <HelmetProvider>
         <Navigation />
-        {loading && <Loader />}
-        <Suspense fallback={<Loader />}>
+        {/* {loading && <Loader />} */}
+        {/* <Suspense fallback={<Loader />}> */}
           <Routes>
             <Route
               path="/"
               element={
-                <PrivateRoute component={<ShopPage />} redirectTo="/login" />
+                <PrivateRoute component={<ShopPage />}  />
               }
             />
             <Route
@@ -131,7 +131,7 @@ export default function App() {
 
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-        </Suspense>
+        {/* </Suspense> */}
       </HelmetProvider>
     </div>
   );

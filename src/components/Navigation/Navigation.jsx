@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import css from "./Navigation.module.css";
-import BurderMenue from "../BurderMenue/BurderMenue";
+ import BurderMenue from "../BurderMenue/BurderMenue";
 import { selectIsLoggedin, selectUser } from "../../redux/auth/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState } from "react";
@@ -73,7 +73,7 @@ export default function Navigation() {
           </nav>
         </div>
         <div className={css.rightBlock}>
-          {/* {isLoggedin && <AuthFound context="Navigation" />}
+          {isLoggedin && <AuthFound context="Navigation" />}
           {isLoggedin && (
             <button
               className={css.burgerBtn}
@@ -84,10 +84,10 @@ export default function Navigation() {
                 <use href="/sprite.svg#icon-burger"></use>
               </svg>
             </button>
-          )} */}
+          )}
         </div>
       </div>
-      {/* {menuOpen && <BurderMenue closeMenu={handleMenuToggle} />} */}
+      {menuOpen && <BurderMenue closeMenu={handleMenuToggle} />}
     </section>
   );
 }
