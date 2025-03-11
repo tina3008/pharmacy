@@ -14,6 +14,10 @@
   --text-color-white: #fff;
   --text-grey:rgba(29, 30, 33, 0.40);
   --btn-text: rgba(29, 30, 33, 0.60);
+  --line: rgba(247, 248, 250, 0.30);
+
+  --border-color_error: rgb(246, 76, 76);
+  --borderColor_success: rgb(99, 199, 6);
 }
 @supports (font-variation-settings: normal) {
   :root {

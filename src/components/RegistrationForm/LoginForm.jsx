@@ -4,10 +4,10 @@ import { Formik, Form, Field } from "formik";
 import { Toaster } from "react-hot-toast";
 import { login } from "../../redux/auth/operations.js";
 import { useDispatch } from "react-redux";
-import PasswordField from "../RegistrationForm/PasswordField/PasswordField";
-import CustomMessage from "../RegistrationForm/CustomMessage/CustomMessage";
+import CustomMessage from "./CustomMessage/CustomMessage.jsx";
 import * as Yup from "yup";
 import { showSuccess, showError } from "../ToastComponent/ToastComponent.jsx";
+import CowerForm from "./CowerForm/CowerForm.jsx";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -37,16 +37,12 @@ export default function LoginForm() {
         navigate("/shop");
       })
       .catch((err) => {
-        showError({ message: `Login failed: ${err.toString()}`});
+        showError({ message: `Login failed: ${err.toString()}` });
       });
   };
 
   return (
-    <div className={css.registrationForm}>
-      <h2 className={css.regTitle}>Login</h2>
-      <p className={`${css.loginTxt} ${css.text}`}>
-        Please enter your login details to continue using our service:
-      </p>
+    <CowerForm>
       <Formik
         initialValues={{
           email: "",
@@ -57,7 +53,7 @@ export default function LoginForm() {
       >
         {({ errors, touched }) => (
           <Form className={css.form} autoComplete="off">
-            <div className={css.fialdStyle}>
+            <div className={css.loginStyle}>
               <div className={css.fieldPosition}>
                 <Field
                   type="email"
@@ -77,10 +73,25 @@ export default function LoginForm() {
                   touched={touched.email}
                 />
               </div>
-              <PasswordField
-                errors={errors.password}
-                touched={touched.password}
-              />
+              <div className={css.fieldPosition}>
+                <Field
+                  type="password"
+                  name="password"
+                  className={`${css.field} ${
+                    errors && touched
+                      ? css.errorField
+                      : touched && !errors
+                      ? css.successField
+                      : ""
+                  }`}
+                  placeholder="Password"
+                />
+                <CustomMessage
+                  name="password"
+                  errors={errors.password}
+                  touched={touched.password}
+                />
+              </div>
             </div>
             <button type="submit" className={css.btn}>
               Login
@@ -90,8 +101,8 @@ export default function LoginForm() {
         )}
       </Formik>
       <NavLink to="/register" className={css.switchPageBtn}>
-        Register
+        Don't have an account?
       </NavLink>
-    </div>
+    </CowerForm>
   );
 }

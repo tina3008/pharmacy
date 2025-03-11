@@ -1,0 +1,89 @@
+.position {
+  padding: 42px 0 191px;
+  position: relative;
+}
+.textBlock {
+  position: relative;
+}
+.text {
+  font-family: Inter;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: var(--text-color-main);
+}
+
+.greenTxt {
+  color: var(--btn-green);
+}
+.pill {
+  width: 95px;
+  position: absolute;
+  right: 45px;
+  top: -53px;
+}
+.imgRegister {
+  position: absolute;
+  width: 194px;
+  bottom: 0;
+  right: -10px;
+}
+@media screen and (max-width: 374px) {
+  .position {
+    padding: 42px 10px 191px;
+  }
+  .pill {
+    width: 75px;
+    right: 5px;
+    top: -40px;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+}
+
+@media screen and (min-width: 768px) {
+  .position {
+    padding: 88px 0 250px;
+  }
+
+  .text {
+    font-size: 54px;
+    line-height: 1.1;
+    width: 614px;
+    margin-bottom: 54px;
+  }
+  .pill {
+    width: 179px;
+    left: 416px;
+    top: -106px;
+  }
+  .imgRegister {
+    width: 277px;
+    right: -30px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .position {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 262px;    
+  }
+  .positionReg{
+column-gap: 54px;
+  }
+  .positionLogin{
+column-gap: 150px;
+  }
+  .imgRegister {
+    right: -120px;
+  }
+  .loginInfo{
+    width: 572px;
+  }
+  .text{
+    margin-bottom: 0;
+  }
+}

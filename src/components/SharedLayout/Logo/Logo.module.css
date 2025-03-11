@@ -1,0 +1,25 @@
+.logo {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--text-color-main);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.03;
+  font-family: Inter;
+}
+.imgLogo {
+  width: 32px;
+  height: 32px;
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    gap: 14px;
+    font-size: 20px;
+  }
+  .imgLogo {
+    width: 44px;
+    height: 44px;
+  }
+}

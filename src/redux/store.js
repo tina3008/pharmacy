@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-// import { wordReducer } from "./words/slice";
+import { shopReducer } from "./shop/slice";
 // import { filterReducer } from "./filters/slice";
 // import { modalReducer } from "./modal/slice";
 import authReducer from "./auth/slice";
@@ -25,17 +25,18 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    // words: wordReducer,
+     shop: shopReducer,
     // filters: filterReducer,
     auth: persistedAuthReducer,
-    // modal: modalReducer,
 
+    // modal: modalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      // serializableCheck: {
+      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      // },
+      serializableCheck: false,
     }),
 });
 

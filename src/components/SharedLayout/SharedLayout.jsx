@@ -1,32 +1,27 @@
-import css from './SharedLayout.module.css';
+import { useSelector } from "react-redux";
+import { selectIsLoggedin } from "../../redux/auth/selectors";
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
+import css from "./SharedLayout.module.css";
+import Logo from "./Logo/Logo";
 
 export default function SharedLayout({ children }) {
-  const dictionaryPage = useSelector(selectDictionaryPage);
-  const recommendPage = useSelector(selectRecommendPage);
-
+   const isLoggedin = useSelector(selectIsLoggedin);
   return (
-    <div className={css.cowerPage}>
-      <div className={css.position}>
-        <Dashboard />
-        <div className={css.cowerTable}>{children}</div>
-        <div className={css.pagination}>
-          {location.pathname === "/dictionary" ? (
-            <PaginatedItems
-              items={dictionaryPage.items}
-              totalPage={dictionaryPage.totalPage}
-              currentPage={dictionaryPage.currentPage || 1}
-              fetchAction={fetchWordsOwn}
-            />
-          ) : (
-            <PaginatedItems
-              items={recommendPage.items}
-              totalPage={recommendPage.totalPage}
-              currentPage={recommendPage.currentPage}
-              fetchAction={allWords}
-            />
-          )}
-        </div>
+    <div className={css.coverPage}>
+      <div
+        className={
+          location.pathname === "/login" || location.pathname === "/register"
+            ? css.headerLogin
+            : css.coverHeader
+        }
+      >
+        {isLoggedin ? <Header /> : <Logo />}
       </div>
+      <main className={`${isLoggedin} ? ${css.coverMain} : ${css.coverLogin}`}>
+        {children}
+      </main>
+      {isLoggedin && <Footer />}
     </div>
   );
 }

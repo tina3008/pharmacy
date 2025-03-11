@@ -1,0 +1,127 @@
+.head {
+  font-family: Inter;
+  margin-bottom: 40px;
+}
+.title {
+  color: var(--text-color-main);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.text {
+  color: #6a6a6f;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+.fialdStyle {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.fieldPosition {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+.label {
+  margin-left: 18px;
+  color: var(--text-color-main);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.field {
+  border-radius: 60px;
+  border: 1px solid rgba(29, 30, 33, 0.2);
+  color: var(--btn-text);
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.3;
+  padding: 13px 18px;
+  width: 100%;
+}
+.field:hover,
+.field:focus,
+.field:active {
+  border: 1px solid var(--btn-green);
+  color: var(--text-color-main);
+}
+.radioBlock {
+  color: var(--text-color-main);
+  margin-bottom: 40px;
+  display: inline-flex;
+  column-gap: 8px;
+  width: 100%;
+}
+.radioTitle {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+
+.radioBlock input[type="radio"] {
+  display: none;
+}
+
+.radioIcon {
+  display: hidden;
+  fill: transparent;
+  border: 2px solid rgba(18, 20, 23, 0.2);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+}
+
+input[type="radio"]:checked + .radioIcon {
+  border-color: var(--btn-green);
+  fill: var(--btn-green);
+}
+
+.radiolabel {
+  display: inline-flex;
+  column-gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  padding: 13px 26px;
+  border-radius: 60px;
+  background: var(--btn-green);
+  border: none;
+  color: #f7f8fa;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  overflow: hidden;
+  width: 155px;
+}
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background-color: var(--btn-green-hover);
+}
+@media screen and (min-width: 767px) {
+  .title {
+    font-size: 28px;
+    line-height: 1.14;
+    margin-bottom: 14px;
+  }
+  .text {
+    font-size: 16px;
+    width: 427px;
+  }
+  .fialdStyle {
+    flex-direction: row;
+    column-gap: 14px;
+    flex-wrap: wrap;
+  }
+  .fieldPosition {
+    width: 200px;
+  }
+}

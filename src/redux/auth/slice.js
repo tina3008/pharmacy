@@ -10,20 +10,23 @@ import {
 const initialToken = localStorage.getItem("token");
 const initialUser = JSON.parse(localStorage.getItem("user"));
 
+const initialState = {
+  user: {
+    name: null,
+    phone: null,
+    email: null,
+  },
+  token: initialToken || null,
+  isLoggedin: !!initialToken,
+  refreshToken: null,
+  isLoading: false,
+  isRefreshing: false,
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: {
-      name: null,
-      phone: null,
-      email: null,
-    },
-    token: initialToken || null,
-    refreshToken: null,
-    isLoggedin: !!initialToken,
-    isLoading: false,
-    isRefreshing: false,
-  },
+  initialState,
+
   extraReducers: (builder) =>
     builder
       .addCase(register.pending, (state) => {
@@ -31,22 +34,23 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = action.payload.accessToken;
+        state.token = action.payload.data.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.isLoading = false;
         state.isLoggedin = true;
       })
+
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.data.accessToken;
         state.isLoggedin = true;
-        console.log("state.token", state.token);
       })
-      // .addCase(getUserInfo.fulfilled, (state, action) => {
-      //   console.log("action.payload.user", action.payload.user);
-        
-      //   state.user = action.payload.user;    
-      // })
+      .addCase(login.rejected, (state, action) => {})
+
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        console.log("action.payload.user", action.payload.user);
+        state.user = action.payload.user;
+      })
 
       .addCase(logOut.fulfilled, (state) => {
         state.user = {
@@ -57,26 +61,18 @@ const authSlice = createSlice({
         state.isLoggedin = false;
       })
       .addCase(refreshUser.pending, (state) => {
+        login("state.token", state.token);
+        login("state.user", state.auth);
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-
+        state.user = action.payload.user;
+        state.token = action.payload.data.accessToken;
         state.isLoggedin = true;
         state.isRefreshing = false;
       })
       .addCase(refreshUser.rejected, (state, action) => {
-        state.isRefreshing = false;
-        if (action.error.code === "ERR_BAD_REQUEST") {
-          state.user = {
-            name: null,
-            email: null,
-          };
-          state.token = null;
-          state.isLoggedin = false;
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-        }
+        state.token = null;
       }),
 });
 
