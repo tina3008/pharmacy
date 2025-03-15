@@ -25,7 +25,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-     shop: shopReducer,
+     shops: shopReducer,
     // filters: filterReducer,
     auth: persistedAuthReducer,
 

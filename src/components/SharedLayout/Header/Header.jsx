@@ -5,6 +5,7 @@ import { useDispatch} from "react-redux";
 import BurderMenue from "../BurderMenue/BurderMenue";
 import { logOut } from "../../../redux/auth/operations";
 import Logo from "../Logo/Logo";
+import { clearCurrentShopId } from '../../../redux/shop/slice';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function Header() {
 
   const handleLogout = () => {
     dispatch(logOut());
+    dispatch(clearCurrentShopId());
     navigate("/login");
   };
 

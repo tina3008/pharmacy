@@ -3,48 +3,28 @@ import css from "./Shop.module.css";
 import { Toaster } from "react-hot-toast";
 import { Formik, Form, Field } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import CustomMessage from "../RegistrationForm/CustomMessage/CustomMessage.jsx";
 import { showSuccess, showError } from "../ToastComponent/ToastComponent.jsx";
 import { changeShop, getShopById } from "../../redux/shop/operations.js";
 import { validationControl } from "./CreateShop.jsx";
-import { selectShop } from "../../redux/shop/selectors.js";
+import { selectCurrentShopId, selectShop } from "../../redux/shop/selectors.js";
 import { useEffect, useState } from "react";
 
 export default function EditShop() {
   const dispatch = useDispatch();
-  const shopId = "67aa5d900409923fda18e459";
+  const location = useLocation();
 
-    const shop = useSelector(selectShop);
-    
-    // const [initialValues, setInitialValues] = useState(null);
-    
-    // useEffect(() => {
-    //   if (!shop || Object.keys(shop).length === 0) {
-    //     dispatch(getShopById(shopId));
-    //   }
-    // }, [dispatch, shopId, shop]);
+  const shopId = useSelector(selectCurrentShopId);
+  const shop = useSelector(selectShop);
 
-    // if (!shop || Object.keys(shop).length === 0) {
-    //   return <p>Loading...</p>; // Показываем заглушку, пока данные загружаются
-    // }
+  useEffect(() => {
+    dispatch(getShopById(shopId));
+  }, [dispatch, shopId]);
 
-    console.log("shop", shop);
-
-//   useEffect(() => {
-//     if (shop && Object.keys(shop).length > 0) {
-//       setInitialValues({
-//         name: shop.name || "",
-//         owner: shop.owner || "",
-//         phone: shop.phone || "",
-//         email: shop.email || "",
-//         street: shop.street || "",
-//         city: shop.city || "",
-//         zip: shop.zip || "",
-//         delivery: shop.delivery ? "yes" : "no",
-//       });
-//     }
-//   }, [shop]);
+  if (!shop || Object.keys(shop).length === 0) {
+    return <p>Loading...</p>;
+  }
 
   const handleSubmit = (values, actions) => {
     dispatch(changeShop({ shopId, ...values }))
@@ -66,6 +46,8 @@ export default function EditShop() {
           share.
         </p>
       </div>
+      <p>{shopId}</p>
+      <p>{shop.name}</p>
       <Formik
         initialValues={{
           name: shop.name || "",
@@ -73,7 +55,7 @@ export default function EditShop() {
           phone: shop.phone || "",
           email: shop.email || "",
           street: shop.street || "",
-          city: shop.city || "",
+          sity: shop.sity || "",
           zip: shop.zip || "",
           delivery: shop.delivery || "no",
         }}

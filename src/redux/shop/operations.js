@@ -1,12 +1,23 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
 export const allShops = createAsyncThunk(
   "shop/all",
   async (page = 1, thunkAPI) => {
     try {
       const response = await axios.get(`/shop?page=${page}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getShopById = createAsyncThunk(
+  "shops/shopId",
+  async (shopId, thunkAPI) => {
+    try {
+      const response = await axios.get(`/shop/${shopId}`);
 
       return response.data;
     } catch (error) {
@@ -15,24 +26,11 @@ export const allShops = createAsyncThunk(
   }
 );
 
-export const getShopById = createAsyncThunk("shops/shopId", async (shopId, thunkAPI) => {
-  try {
-    const response = await axios.get(`/shop/${shopId}`);
-
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
 export const changeShop = createAsyncThunk(
   "shop/changeShop",
   async ({ shopId, ...values }, thunkAPI) => {
-    console.log(" shopId--", shopId);
-    console.log("values--", values);
-    
     try {
-      const response = await axios.put(`/shop/${shopId}/update`, values); 
+      const response = await axios.put(`/shop/${shopId}/update`, values);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -43,12 +41,10 @@ export const changeShop = createAsyncThunk(
 export const addShop = createAsyncThunk(
   "shop/create",
   async (newShop, thunkAPI) => {
-    console.log("newShop--", newShop);
-    
     try {
       const response = await axios.post("/shop/create", newShop);
       console.log("response.data-", response.data);
-      
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

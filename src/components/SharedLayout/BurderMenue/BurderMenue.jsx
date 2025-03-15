@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedin } from "../../../redux/auth/selectors";
 import { logOut } from "../../../redux/auth/operations";
 import { IoCloseOutline } from "react-icons/io5";
+import { clearCurrentShopId } from "../../../redux/shop/slice";
 
 export default function BurderMenue({ closeMenu }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,6 +16,7 @@ export default function BurderMenue({ closeMenu }) {
   const handleLogout = () => {
     dispatch(logOut());
     closeMenu(!closeMenu);
+    dispatch(clearCurrentShopId());
     navigate("/login");
   };
 

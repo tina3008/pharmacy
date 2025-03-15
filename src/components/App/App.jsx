@@ -1,11 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import {
-  PrivateRoute,
-  RestrictedRoute,
-} from "./RestrictedRoute.jsx";
+import { PrivateRoute, RestrictedRoute } from "./RestrictedRoute.jsx";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SharedLayout from "../SharedLayout/SharedLayout.jsx"
+import SharedLayout from "../SharedLayout/SharedLayout.jsx";
 import Loader from "../Loader/Loader.jsx";
 import { selectLoading, selectError } from "../../redux/shop/selectors.js";
 import { HelmetProvider } from "react-helmet-async";
@@ -35,7 +32,8 @@ const StatisticsPage = lazy(() =>
 const EditShopPage = lazy(() =>
   import("../../pages/EditShopPage/EditShopPage.jsx")
 );
-
+const DrugStore = lazy(() => import("../Drug/DrugStore.jsx"));
+const AllMedicine = lazy(() => import("../Drug/AllMedicine.jsx"));
 export default function App() {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
@@ -52,85 +50,93 @@ export default function App() {
   return (
     <div>
       <HelmetProvider>
-       < SharedLayout>
-        {loading && <Loader />}
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route
-              path="/"
-              element={<PrivateRoute component={<HomePage />} />}
-            />
-            <Route
-              path="/register"
-              element={
-                <RestrictedRoute
-                  component={<RegisterPage />}
-                  redirectTo="/shop"
-                />
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <RestrictedRoute component={<LoginPage />} redirectTo="/shop" />
-              }
-            />
+        <SharedLayout>
+          {loading && <Loader />}
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route
+                path="/"
+                element={<PrivateRoute component={<HomePage />} />}
+              />
+              <Route
+                path="/register"
+                element={
+                  <RestrictedRoute
+                    component={<RegisterPage />}
+                    redirectTo="/create-shop"
+                  />
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <RestrictedRoute
+                    component={<LoginPage />}
+                    redirectTo="/shop"
+                  />
+                }
+              />
 
-            <Route
-              path="/"
-              element={
-                <PrivateRoute component={<HomePage />} redirectTo="/login" />
-              }
-            />
-            <Route
-              path="/shop"
-              element={
-                <PrivateRoute component={<ShopPage />} redirectTo="/login" />
-              }
-            />
-            <Route
-              path="/create-shop"
-              element={
-                <PrivateRoute
-                  component={<CreateShopPage />}
-                  // redirectTo="/login"
-                />
-              }
-            />
-            <Route
-              path="/edit-shop"
-              element={
-                <PrivateRoute
-                  component={<EditShopPage />}
-                  // redirectTo="/login"
-                />
-              }
-            />
-            <Route
-              path="/medicine"
-              element={
-                <PrivateRoute
-                  component={<MedicinePage />}
-                  redirectTo="/login"
-                />
-              }
-            />
-            <Route
-              path="/statistics"
-              element={
-                <PrivateRoute
-                  component={<StatisticsPage />}
-                  redirectTo="/login"
-                />
-              }
-            />
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute component={<HomePage />} redirectTo="/login" />
+                }
+              />
 
-            {/* <Route path="/training/:id" element={<TrainingWordId />} /> */}
+              <Route
+                path="/shop"
+                element={
+                  <PrivateRoute component={<ShopPage />} redirectTo="/login" />
+                }
+              >
+                <Route path="drug" element={<DrugStore />} />
+                <Route path="allmedicine" element={<AllMedicine />} />
+              </Route>
 
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+              <Route
+                path="/create-shop"
+                element={
+                  <PrivateRoute
+                    component={<CreateShopPage />}
+                    // redirectTo="/login"
+                  />
+                }
+              />
+              <Route
+                path="/edit-shop"
+                element={
+                  <PrivateRoute
+                    component={<EditShopPage />}
+                    // redirectTo="/login"
+                  />
+                }
+              />
+              <Route
+                path="/medicine"
+                element={
+                  <PrivateRoute
+                    component={<MedicinePage />}
+                    redirectTo="/login"
+                  />
+                }
+              />
+              <Route
+                path="/statistics"
+                element={
+                  <PrivateRoute
+                    component={<StatisticsPage />}
+                    redirectTo="/login"
+                  />
+                }
+              />
+
+              {/* <Route path="/training/:id" element={<TrainingWordId />} /> */}
+
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
           </Suspense>
-          </SharedLayout>
+        </SharedLayout>
       </HelmetProvider>
     </div>
   );

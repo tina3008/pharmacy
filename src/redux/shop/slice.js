@@ -13,9 +13,19 @@ const shopSlice = createSlice({
     error: null,
     loading: false,
     allShops: {},
+    currentShopId: localStorage.getItem("shopId") || null,
+  },
+  reducers: {
+    setCurrentShopId: (state, action) => {
+      state.currentShopId = action.payload;
+      localStorage.setItem("shopId", action.payload);
+    },
+    clearCurrentShopId: (state) => {
+      state.currentShopId = null;
+      localStorage.removeItem("shopId");
+    },
   },
 
-  
   extraReducers: (builder) => {
     builder
       .addCase(allShops.pending, (state) => {
@@ -25,7 +35,7 @@ const shopSlice = createSlice({
       .addCase(allShops.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = action.payload.items;
+        state.items = action.payload.data?.shops;
         state.totalPage = action.payload.totalPages;
         state.currentPage = action.payload.page;
       })
@@ -41,7 +51,6 @@ const shopSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.item = action.payload.data;
-        console.log("state.item--", state.item);
       })
       .addCase(getShopById.rejected, (state, action) => {
         state.isLoading = false;
@@ -69,11 +78,11 @@ const shopSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(changeShop.fulfilled, (state, action) => {
+        console.log("action.payload", action.payload);
         state.isLoading = false;
         state.error = null;
         state.items.push(action.payload);
       })
-    
       .addCase(changeShop.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
@@ -128,4 +137,5 @@ const shopSlice = createSlice({
   },
 });
 
+export const { setCurrentShopId, clearCurrentShopId } = shopSlice.actions;
 export const shopReducer = shopSlice.reducer;
