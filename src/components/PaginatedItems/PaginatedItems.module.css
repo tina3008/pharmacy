@@ -31,7 +31,7 @@ background-color: transparent;
 .activeClassName{
 
 background: #85AA9F;
-color: var(--fff);
+color: red;
 }
 
 @media screen and (max-width: 375px){

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { PrivateRoute, RestrictedRoute } from "./RestrictedRoute.jsx";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,8 +32,8 @@ const StatisticsPage = lazy(() =>
 const EditShopPage = lazy(() =>
   import("../../pages/EditShopPage/EditShopPage.jsx")
 );
-const DrugStore = lazy(() => import("../Drug/DrugStore.jsx"));
-const AllMedicine = lazy(() => import("../Drug/AllMedicine.jsx"));
+const DrugStore = lazy(() => import("../Products/DrugStore.jsx"));
+const AllMedicine = lazy(() => import("../Products/AllMedicine.jsx"));
 export default function App() {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
@@ -90,6 +90,7 @@ export default function App() {
                   <PrivateRoute component={<ShopPage />} redirectTo="/login" />
                 }
               >
+                <Route index element={<Navigate to="drug" replace />} />
                 <Route path="drug" element={<DrugStore />} />
                 <Route path="allmedicine" element={<AllMedicine />} />
               </Route>

@@ -11,27 +11,17 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Loader from "../../components/Loader/Loader";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { setCurrentShopId } from "../../redux/shop/slice";
-
+import { openModal } from "../../redux/modal/slice";
+import { selectActiveModal } from "../../redux/modal/selectors";
+import AddProductModal from "../../components/AddProduct/AddProduct";
 export default function ShopPage() {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const isError = useSelector(selectError);
   const shops = useSelector(selectShops);
+  const activeModal = useSelector(selectActiveModal);
   const navigate = useNavigate();
   const shop1 = shops[0] || {};
-
-  // const {
-  //   delivery,
-  //   email,
-  //   name,
-  //   owner,
-  //   password,
-  //   phone,
-  //   rating,
-  //   sity,
-  //   street,
-  //   zip,
-  // } = shop1;
 
   useEffect(() => {
     dispatch(allShops());
@@ -41,11 +31,15 @@ export default function ShopPage() {
     return `${css.normalLink} ${isActive ? css.activeLink : ""}`;
   };
 
-  const handleEdit = () => {
-    dispatch(setCurrentShopId(shop1._id));
-    navigate("/edit-shop");
-  };
+   const handleEdit = () => {
+     dispatch(setCurrentShopId(shop1._id));
+     navigate("/edit-shop");
+   };
 
+  const handleAdd = () => {
+    dispatch(openModal("addProduct"));
+
+  };
   return (
     <div className={css.shopPage}>
       {loading && <Loader />}
@@ -79,7 +73,9 @@ export default function ShopPage() {
                 <button className={css.switchPageBtn} onClick={handleEdit}>
                   Edit data
                 </button>
-                <button className={css.switchPageBtn}>Add medicine</button>
+                <button className={css.switchPageBtn} onClick={handleAdd}>
+                  Add medicine
+                </button>
               </div>
             </div>
           </div>
@@ -99,6 +95,7 @@ export default function ShopPage() {
         </>
       )}
       {isError && <ErrorMessage />}
+      {activeModal === "addProduct" && <AddProductModal />}
     </div>
   );
 }

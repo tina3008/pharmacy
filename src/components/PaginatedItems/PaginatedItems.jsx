@@ -12,31 +12,24 @@ export const PaginatedItems = ({
   const dispatch = useDispatch();
   const [page, setPage] = useState(currentPage - 1);
   const [pageRange, setPageRange] = useState(3);
+
   useEffect(() => {
-
-    
     if (currentPage !== page + 1) {
-      dispatch(fetchAction(page + 1));
+      setPage(currentPage - 1);
     }
-  }, [page, dispatch, fetchAction, currentPage]);
+  }, [currentPage]);
 
-  const handlePageClick = ({ selected }) => {    
-    setPage(selected) ;
+  const handlePageClick = async ({ selected }) => {
+    setPage(selected);
+
+    try {
+      const response = await dispatch(fetchAction(selected + 1)).unwrap();
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   const pageCount = totalPage || 1;
-
-    useEffect(() => {
-      const updatePageRange = () => {
-        setPageRange(window.innerWidth < 768 ? 2 : 3);
-      };
-
-      updatePageRange(); 
-      window.addEventListener("resize", updatePageRange);
-
-      return () => window.removeEventListener("resize", updatePageRange);
-    }, []);
-
   return (
     <div className={css.paginationBlock}>
       <button onClick={() => setPage(0)} className={css.pageButton}>
