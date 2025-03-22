@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { allProducts } from "../../redux/products/operations";
+import { NavLink } from "react-router-dom";
+import { addProduct, fetchProducts } from "../../redux/products/operations";
 import {
   selectProducts,
   selectError,
@@ -17,6 +18,8 @@ import { openModal } from "../../redux/modal/slice";
 import { selectActiveModal } from "../../redux/modal/selectors";
 import DeleteProductModal from "../AddProduct/DeleteProduct";
 import EditProductModal from "../AddProduct/EditProduct";
+import { showError, showSuccess } from "../ToastComponent/ToastComponent";
+import Filters from "../Filters/Filters";
 
 export default function AllMedicine() {
   const dispatch = useDispatch();
@@ -29,84 +32,94 @@ export default function AllMedicine() {
   const activeModal = useSelector(selectActiveModal);
 
   useEffect(() => {
-    dispatch(allProducts({ shopId, page: 1 }));
-  }, [dispatch, shopId]);
+    dispatch(fetchProducts({ page: 1 }));
+  }, [dispatch]);
 
   const handleAddToShop = (product) => {
-    dispatch(openModal({ type: "addToShop", product }));
+    const formData = new FormData();
+    const { _id, id, ...addValue } = product;
+
+    Object.entries(addValue).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    dispatch(addProduct({ shopId, newProduct: formData }))
+      .unwrap()
+      .then(() => {
+        showSuccess({ message: "The product has been added" });
+        handleClose();
+      })
+      .catch(() => {
+        showError({ message: "Was error, please try again" });
+      });
   };
 
-  const handleDetalis = (product) => {
-    dispatch(openModal({ type: "detalisProduct", product }));
-  };
+  return (
+    <>
+      <Filters />
+      {loading && <Loader />}
+      {products && (
+        <ul className={css.list}>
+          {products
+            .filter((product) => product._id)
+            .map((product) => (
+              <li key={product._id} className={css.card}>
+                <div className={css.photo}>
+                  {product.photo ? (
+                    <img
+                      src={product.photo}
+                      alt={`${product.name} image`}
+                      className={css.img}
+                      width="200"
+                    />
+                  ) : (
+                    <img
+                      src="/drug.png"
+                      alt={`${product.name} image`}
+                      className={css.altImg}
+                    />
+                  )}
+                </div>
 
-     return (
-       <>
-         {loading && <Loader />}
-         {products && (
-           <ul className={css.list}>
-             {products
-               .filter((product) => product._id)
-               .map((product) => (
-                 <li key={product._id} className={css.card}>
-                   <div className={css.photo}>
-                     {product.photo ? (
-                       <img
-                         src={product.photo}
-                         alt={`${product.name} image`}
-                         className={css.img}
-                         width="200"
-                       />
-                     ) : (
-                       <img
-                         src="/drug.png"
-                         alt={`${product.name} image`}
-                         className={css.altImg}
-                       />
-                     )}
-                   </div>
+                <div className={css.text}>
+                  <div className={css.pill}>
+                    <p className={css.namePrice}>{product.name}</p>
+                    <p className={css.namePrice}>৳{product.price}</p>
+                  </div>
+                  <p className={css.category}>{product.category}</p>
+                  <div className={css.btnMed}>
+                    <button
+                      onClick={() => handleAddToShop(product)}
+                      className={css.btnMain}
+                      style={{ width: "114px" }}
+                    >
+                      Add to shop
+                    </button>
+                    <NavLink to="/medicine" className={css.navLinks}>
+                      Details
+                    </NavLink>
+                  </div>
+                </div>
+              </li>
+            ))}
+        </ul>
+      )}
+      <div className={css.pagination}>
+        <PaginatedItems
+          items={products}
+          totalPage={totalPage}
+          currentPage={currentPage}
+          fetchAction={(page) => fetchProducts({ page })}
+        />
+      </div>
 
-                   <div className={css.text}>
-                     <div className={css.pill}>
-                       <p className={css.namePrice}>{product.name}</p>
-                       <p className={css.namePrice}>৳{product.price}</p>
-                     </div>
-                     <p className={css.category}>{product.category}</p>
-                     <div className={css.btnBlock}>
-                       <button
-                         onClick={() => handleEdit(product)}
-                         className={css.btn}
-                       >
-                         Edit
-                       </button>
-                       <button
-                         onClick={() => handleDelete(product)}
-                         className={css.btn}
-                       >
-                         Delete
-                       </button>
-                     </div>
-                   </div>
-                 </li>
-               ))}
-           </ul>
-         )}
-         <div className={css.pagination}>
-           <PaginatedItems
-             items={products}
-             totalPage={totalPage}
-             currentPage={currentPage}
-             fetchAction={(page) => allProducts({ shopId, page })}
-           />
-         </div>
-
-         {isError && <ErrorMessage />}
-         {activeModal?.type == "detalisProduct" && (
-           <DeleteProductModal product={activeModal.product} />
-         )}
-         {activeModal?.type == "addToShop" && (
-           <EditProductModal product={activeModal.product} />
-         )}
-       </>
-     );
-    }
+      {isError && <ErrorMessage />}
+      {activeModal?.type == "detalisProduct" && (
+        <DeleteProductModal product={activeModal.product} />
+      )}
+      {activeModal?.type == "addToShop" && (
+        <EditProductModal product={activeModal.product} />
+      )}
+    </>
+  );
+}

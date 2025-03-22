@@ -17,7 +17,6 @@ import { getShopById } from "../../redux/shop/operations";
 export const customStyles = {
   overlay: {
     backgroundColor: "rgba(29, 30, 33, 0.45)",
-
   },
   content: {
     top: "50%",
@@ -40,7 +39,7 @@ export const validationControl = Yup.object().shape({
     .min(1, "Too short")
     .max(50, "Too long")
     .required("Required"),
-  price: Yup.number()
+  price: Yup.string()
     .min(0, "Too short")
     .max(999999, "Too long")
     .required("Required"),
@@ -50,12 +49,12 @@ export const validationControl = Yup.object().shape({
     .required("Required"),
   photo: Yup.mixed()
     .test("fileSize", "Too long", (value) => {
-      if (!value || typeof value === "string") return true; // Allow existing images (URLs)
-      return value.size <= 2 * 1024 * 1024; // Validate only if it's a File
+      if (!value || typeof value === "string") return true;
+      return value.size <= 2 * 1024 * 1024; 
     })
     .test("fileType", "Invalid format", (value) => {
-      if (!value || typeof value === "string") return true; // Allow existing images (URLs)
-      return ["image/jpeg", "image/png"].includes(value.type); // Validate only if it's a File
+      if (!value || typeof value === "string") return true; 
+      return ["image/jpeg", "image/png"].includes(value.type); 
     }),
 });
 
@@ -83,9 +82,9 @@ export default function AddProductModal() {
 
   const handleSubmit = (values, actions) => {
     const formData = new FormData();
-    formData.append("name", values.name.trim().toLowerCase());
+    formData.append("name", values.name.trim());
     formData.append("price", values.price);
-    formData.append("medicine", values.medicine.trim().toLowerCase());
+    formData.append("medicine", values.medicine.trim());
     if (values.photo) {
       formData.append("photo", values.photo);
     }
@@ -124,13 +123,6 @@ export default function AddProductModal() {
   }, [activeModal]);
 
   const [preview, setPreview] = useState(null);
-  // const handleFileChange = (event) => {
-  //   const file = event.currentTarget.files[0];
-  //   if (file) {
-  //     formik.setFieldValue("photo", file);
-  //     setPreview(URL.createObjectURL(file));
-  //   }
-  // };
 
   return (
     <>

@@ -5,6 +5,7 @@ import {
   deleteProduct,
   getProductById,
   editProduct,
+  fetchProducts,
 } from "./operations";
 
 import { logOut } from "../auth/operations";
@@ -37,10 +38,25 @@ const productsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(getProductById.pending, (state) => {
+      .addCase(fetchProducts.pending, (state) => {
         state.error = false;
         state.isLoading = true;
       })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = action.payload.data.data;
+        state.totalPage = action.payload.data.totalPages;
+        state.currentPage = action.payload.data.page;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // .addCase(getProductById.pending, (state) => {
+      //   state.error = false;
+      //   state.isLoading = true;
+      // })
       // .addCase(getProductById.fulfilled, (state, action) => {
       //   state.isLoading = false;
       //   state.error = null;

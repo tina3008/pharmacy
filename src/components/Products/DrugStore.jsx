@@ -74,7 +74,8 @@ export default function DrugStore() {
                   <div className={css.btnBlock}>
                     <button
                       onClick={() => handleEdit(product)}
-                      className={css.btn}
+                      className={css.btnMain}
+                      style={{ width: "76px" }}
                     >
                       Edit
                     </button>

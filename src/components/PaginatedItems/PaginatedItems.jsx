@@ -32,7 +32,7 @@ export const PaginatedItems = ({
   const pageCount = totalPage || 1;
   return (
     <div className={css.paginationBlock}>
-      <button onClick={() => setPage(0)} className={css.pageButton}>
+      <button onClick={() => setPage(0)} className={css.pageButtonFirst}>
         &lt;&lt;
       </button>
       <ReactPaginate
@@ -41,6 +41,7 @@ export const PaginatedItems = ({
         activeClassName={css.activeClassName}
         previousClassName={css.previousClassName}
         nextClassName={css.nextClassName}
+        breakClassName={css.break}
         breakLabel="..."
         nextLabel=">"
         onPageChange={handlePageClick}

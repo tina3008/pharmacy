@@ -12,6 +12,22 @@ export const allProducts = createAsyncThunk(
     }
   }
 );
+export const fetchProducts = createAsyncThunk(
+  "products/fetch",
+  async ({page}, thunkAPI) => {
+    console.log("page", page);
+    
+    try {
+      const response = await axios.get(`/products?page=${page}`);
+      console.log(response.data);
+      
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const addProduct = createAsyncThunk(
   "products/create",
   async ({ shopId, newProduct }, thunkAPI) => {
@@ -64,7 +80,7 @@ export const deleteProduct = createAsyncThunk(
         `/shop/${shopId}/product/${_id}/delete`
       );
 
-       return _id;
+      return _id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
