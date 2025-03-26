@@ -6,6 +6,7 @@ import {
   getProductById,
   editProduct,
   fetchProducts,
+
 } from "./operations";
 
 import { logOut } from "../auth/operations";
@@ -53,6 +54,20 @@ const productsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+      // .addCase(fetchCategory.pending, (state) => {
+      //   state.error = false;
+      //   state.isLoading = true;
+      // })
+      // .addCase(fetchCategory.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.error = null;
+      //   state.items = action.payload.data.data;
+
+      // })
+      // .addCase(fetchCategory.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.error = action.payload;
+      // })
       // .addCase(getProductById.pending, (state) => {
       //   state.error = false;
       //   state.isLoading = true;

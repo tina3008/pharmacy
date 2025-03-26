@@ -88,47 +88,6 @@ const shopSlice = createSlice({
         state.error = action.payload;
       })
 
-      //   .addCase(changeShop.fulfilled, (state, action) => {
-      //     state.isLoading = false;
-      //       state.error = null;
-      //       state.item = action.payload;
-      // const index = state.items.findIndex(
-      //   (item) => item._id === action.payload._id
-      // );
-      // if (index !== -1) {
-      //   state.items[index] = action.payload;
-      // }
-      //   })
-
-      //   .addCase(deleteShop.pending, (state) => {
-      //     state.error = false;
-      //     state.isLoading = true;
-      //   })
-      //   .addCase(deleteShop.fulfilled, (state, action) => {
-      //     state.isLoading = false;
-      //     state.error = null;
-      //     state.items = state.items.filter(
-      //       (item) => item._id !== action.payload._id
-      //     );
-      //   })
-      //   .addCase(deleteShop.rejected, (state, action) => {
-      //     state.isLoading = false;
-      //     state.error = action.payload;
-      //   })
-
-      //   .addCase(fetchStatistics.pending, (state) => {
-      //     state.error = false;
-      //     state.isLoading = true;
-      //   })
-      //   .addCase(fetchStatistics.fulfilled, (state, action) => {
-      //     state.isLoading = false;
-      //     state.error = null;
-      //     state.totalCount = action.payload;
-      //   })
-      //   .addCase(fetchStatistics.rejected, (state, action) => {
-      //     state.isLoading = false;
-      //     state.error = action.payload;
-      //   })
       .addCase(logOut.fulfilled, (state) => {
         state.items = [];
         state.loading = false;

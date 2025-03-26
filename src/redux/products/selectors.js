@@ -7,4 +7,5 @@ export const selectProduct = (state) => state.products?.item;
 export const selectTotalPage = (state) => state.products?.totalPage;
 export const selectCurrentPage = (state) => state.products.currentPage || 1;
 export const selectCurrentProductId = (state) =>
-  state.products.currentproductId || "67aa817202c59a4a92629569";
+  state.products.currentproductId;
+export const selectCategories = (state) => state.categories.categories;

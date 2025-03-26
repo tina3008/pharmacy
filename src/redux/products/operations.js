@@ -12,15 +12,28 @@ export const allProducts = createAsyncThunk(
     }
   }
 );
+
 export const fetchProducts = createAsyncThunk(
   "products/fetch",
-  async ({page}, thunkAPI) => {
-    console.log("page", page);
-    
+  async ({ page, category, name }, thunkAPI) => {
     try {
-      const response = await axios.get(`/products?page=${page}`);
-      console.log(response.data);
-      
+      const response = await axios.get(`/products/`, {
+        params: { page, category, name },
+      });
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchCategories = createAsyncThunk(
+  "categories/fetchCategory",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(`/products/categories`);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

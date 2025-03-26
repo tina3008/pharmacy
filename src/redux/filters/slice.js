@@ -1,23 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCategories } from "../words/operations";
+import { fetchCategories } from "../products/operations";
 
 const filterSlice = createSlice({
   name: "filters",
   initialState: {
     values: {
       category: "",
-      en: " ",
-      ua: " ",
-      isIrregular: "",
+      name: " ",
     },
-    pageType: "dictionary",
   },
   reducers: {
     setStatusFilter: (state, action) => {
       state.values = { ...state.values, ...action.payload };
-    },
-    setPageType: (state, action) => {
-      state.pageType = action.payload; 
     },
   },
 });
@@ -37,9 +31,8 @@ const categoriesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
-        state.categories = action.payload;
-        state.loading = false;  
-        
+        state.categories = action.payload.data;
+        state.loading = false;
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.error = action.payload;
@@ -48,6 +41,6 @@ const categoriesSlice = createSlice({
   },
 });
 
-export const { setStatusFilter, setCategory, setPageType } = filterSlice.actions;
+export const { setStatusFilter, setCategoies } = filterSlice.actions;
 export const filterReducer = filterSlice.reducer;
 export const categoriesReducer = categoriesSlice.reducer;

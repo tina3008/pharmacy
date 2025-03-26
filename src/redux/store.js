@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { thunk } from "redux-thunk";
 import {
   persistStore,
   persistReducer,
@@ -12,7 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { shopReducer } from "./shop/slice";
-import { filterReducer } from "./filters/slice";
+import { filterReducer, categoriesReducer } from "./filters/slice";
 import { modalReducer } from "./modal/slice";
 import authReducer from "./auth/slice";
 import { productsReducer } from "./products/slice";
@@ -32,6 +31,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     modal: modalReducer,
     products: productsReducer,
+    categories: categoriesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -40,10 +40,5 @@ export const store = configureStore({
       },
     }),
 });
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: false,
-//     }).concat(thunk),
-// });
 
 export const persistor = persistStore(store);

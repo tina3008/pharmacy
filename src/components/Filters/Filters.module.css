@@ -1,96 +1,87 @@
 .filtersBlock {
   display: flex;
-  gap: 8px;
-  align-items: center;
+  gap: 12px;
+  align-items: flex-start;
   justify-content: center;
-  font-family: "MacPaw Fixel Display";
+  font-family: Inter;
+  margin: 40px auto;
 }
-.filterItem {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
+.fieldPosition {
   position: relative;
+  border-radius: 60px;
+  border: 1px solid var(--btn-gray);
+  background: var(--text-color-white);
+  padding: 13px 18px;
+  width: 100%;
+  overflow: hidden;
 }
-.filterWord {
-  display: flex;
-  padding: 12px 24px;
-  justify-content: left;
-  align-items: center;
-  gap: 8px;
-  border-radius: 15px;
-  border: 1px solid var(--text-color-non-active);
-  color: var(--text-color-main);
-  font-family: "MacPaw Fixel Display";
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.5;
-  background-color: transparent;
-  height: 48px;
-}
-.searchWord {
-  background-color: transparent;
+
+.field {
   border: none;
-  position: absolute;
-  top: 14px;
-  right: 8px;
+  background: var(--text-color-white);
+  padding: 0;
+  width: 100%;
+  color: var(--text-grey);
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
 }
-
-
-.wordBtnImg {
-  stroke: var(--text-color-main);
-  fill: transparent;
-  display: inline;
-}
-
-.radioPosition {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-.customAddWordRadio,
-.customRadio {
-  appearance: none;
-  width: 20px;
-  height: 20px; 
-  border-radius: 50%;
+.field:focus,
+.field:active,
+.field:hover {
+  border: none;
   outline: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
+  color: var(--text-grey);
+  background-color: var(--text-color-white);
 }
-.customRadio {
-   border: 2px solid rgba(18, 20, 23, 0.2);
+.field:-webkit-autofill {
+  -webkit-text-fill-color: var(--text-grey);
+  -webkit-box-shadow: var(--text-color-white);
 }
-.customAddWordRadio{
-  border: 2px solid var(--white);
+.field::placeholder {
+    color: var(--text-grey); 
+  opacity: 1;
+    background-color: var(--text-color-white);
 }
-.customRadio:checked {
-  border-color: var(--color_hover);
+option:checked {
+  background-color: var(--btn-green);
 }
-.customAddWordRadio:checked {
-  border-color: var(--white);
+.imgField {
+  size: 16px;
+  color: var(--text-color-main);
+  position: absolute;
+  right: 19px;
+  top: 15px;
+  background-color: var(--text-color-white);
+}
+.iconBtn {
+  size: 14px;
+  color: var(--text-color-white);
+  background-color: transparent;
+  margin-right: 8px;
+}
+.filtersBtn{
+color: #FFF;
+font-family: Inter;
+font-size: 14px;
+font-weight: 500;
+line-height: 1.3;
+width: 116px;
+height: 44px;
+border-radius: 60px;
+display: inline-flex;
+justify-content: center;
+align-items: center;
+border: none;
+background-color: var(--btn-green);
+margin-left: 0;
 }
 
-.customRadio:checked::before {
-  content: "";
-  position: absolute;
-  top: 3px; /* Отступ для создания расстояния */
-  left:3px;
-  width: 10px; /* Размер внутреннего круга */
-  height: 10px;
-  background-color: var(--color_hover); /* Цвет внутреннего круга */
-  border-radius: 50%; 
-}
-.customAddWordRadio:checked::before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left:3px;
-  width: 10px; 
-  height: 10px;
-  background-color: var(--white); 
-  border-radius: 50%; 
+.filtersBtn:focus,
+.filtersBtn:active,
+.filtersBtn:hover {
+  background-color: var(--btn-green-hover);
 }
 
 @media screen and (max-width: 767px) {
@@ -98,25 +89,29 @@
     flex-direction: column;
     width: 100%;
   }
-  .filterItem,
-  .filterWord,
-  .filtersCategory{
-    width: 100%;
-  }
+
 }
 @media screen and (min-width: 768px) {
   .filtersBlock {
-    flex-direction: row;
-    justify-content: left;
+    flex-direction: row;  
+    justify-content: left;  
+    gap: 14px;
   }
-  .filtersCategory {
-    width: 164px;
-  } 
-  .filterWord {
-    width: 274px;
+   .fieldPosition:first-child {
+    width: 214px; 
+  }
+    .fieldPosition:nth-child(2) {
+    width: 224px;
+  }
+  .filtersBtn{
+    margin-left: -6px;
   }
 }
 @media screen and (min-width: 1440px) {
   .filtersBlock {
+    gap: 8px;
+  }
+  .filtersBtn{
+    margin-left: 0;
   }
 }
