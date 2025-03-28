@@ -12,10 +12,10 @@
   --text-color-main: #1d1e21;
   --txt-fon: #93939a;
   --text-color-white: #fff;
-  --text-grey:rgba(29, 30, 33, 0.40);
-  --btn-text: rgba(29, 30, 33, 0.60);
-  --line: rgba(247, 248, 250, 0.30);
-
+  --text-grey: rgba(29, 30, 33, 0.4);
+  --btn-text: rgba(29, 30, 33, 0.6);
+  --line: rgba(247, 248, 250, 0.3);
+  --review-border: #f1f1f1;
   --border-color_error: rgb(246, 76, 76);
   --borderColor_success: rgb(99, 199, 6);
 }

@@ -1,0 +1,53 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  font-family: Inter;
+}
+
+.review {
+  padding: 14px 28px;
+
+  border-radius: 20px;
+  border: 1px solid var(--review-border);
+}
+.name {
+  color: var(--text-color-main);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.data {
+  color: var(--btn-text);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.txt {
+  color: #6a6a6f;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+}
+
+.pagination{
+    margin-top:40px;
+   text-align: center;
+}
+@media screen and (min-width: 768px){
+    .name {
+  font-size: 18px;
+}
+.txt {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.pagination{
+    margin:60px auto 28px;
+
+}
+}

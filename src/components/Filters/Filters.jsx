@@ -38,7 +38,6 @@ export default function Filters() {
     category: Yup.string().oneOf(categoriesList).required("Required"),
   });
 
-
   const handleSubmit = (values, actions) => {
     fetchResultsDebounced(values.name);
     dispatch(setStatusFilter({ category: values.category }));

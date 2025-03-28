@@ -17,6 +17,7 @@ import { openModal } from "../../redux/modal/slice";
 import { selectActiveModal } from "../../redux/modal/selectors";
 import DeleteProductModal from "../AddProduct/DeleteProduct";
 import EditProductModal from "../AddProduct/EditProduct";
+import Card from "../Card/Card";
 
 export default function DrugStore() {
   const dispatch = useDispatch();
@@ -48,29 +49,7 @@ export default function DrugStore() {
             .filter((product) => product._id)
             .map((product) => (
               <li key={product._id} className={css.card}>
-                <div className={css.photo}>
-                  {product.photo ? (
-                    <img
-                      src={product.photo}
-                      alt={`${product.name} image`}
-                      className={css.img}
-                      width="200"
-                    />
-                  ) : (
-                    <img
-                      src="/drug.png"
-                      alt={`${product.name} image`}
-                      className={css.altImg}
-                    />
-                  )}
-                </div>
-
-                <div className={css.text}>
-                  <div className={css.pill}>
-                    <p className={css.namePrice}>{product.name}</p>
-                    <p className={css.namePrice}>৳{product.price}</p>
-                  </div>
-                  <p className={css.category}>{product.category}</p>
+                <Card product={product}>
                   <div className={css.btnBlock}>
                     <button
                       onClick={() => handleEdit(product)}
@@ -86,7 +65,8 @@ export default function DrugStore() {
                       Delete
                     </button>
                   </div>
-                </div>
+                </Card>
+                
               </li>
             ))}
         </ul>

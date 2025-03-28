@@ -6,7 +6,6 @@ import {
   getProductById,
   editProduct,
   fetchProducts,
-
 } from "./operations";
 
 import { logOut } from "../auth/operations";
@@ -20,8 +19,13 @@ const productsSlice = createSlice({
     isLoading: false,
     error: null,
     loading: false,
+    selectedProduct: null,
   },
-
+  reducers: {
+    setSelectedProduct: (state, action) => {
+      state.selectedProduct = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(allProducts.pending, (state) => {
@@ -32,7 +36,7 @@ const productsSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.items = action.payload.data.data;
-        state.totalPage = action.payload.data.totalPages;
+        state.totalPage = action.payload.data.totalPages;         
         state.currentPage = action.payload.data.page;
       })
       .addCase(allProducts.rejected, (state, action) => {
@@ -137,3 +141,4 @@ const productsSlice = createSlice({
 });
 
 export const productsReducer = productsSlice.reducer;
+export const { setSelectedProduct } = productsSlice.actions;

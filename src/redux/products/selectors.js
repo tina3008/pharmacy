@@ -9,3 +9,4 @@ export const selectCurrentPage = (state) => state.products.currentPage || 1;
 export const selectCurrentProductId = (state) =>
   state.products.currentproductId;
 export const selectCategories = (state) => state.categories.categories;
+export const selectedProduct = (state) => state.products.selectedProduct;

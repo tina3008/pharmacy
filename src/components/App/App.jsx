@@ -8,6 +8,8 @@ import { selectLoading, selectError } from "../../redux/shop/selectors.js";
 import { HelmetProvider } from "react-helmet-async";
 import { refreshUser } from "../../redux/auth/operations.js";
 import { selectIsRefreshing } from "../../redux/auth/selectors.js";
+import Description from "../Product/Description/Description.jsx";
+import Reviews from "../Product/Reviews/Reviews.jsx";
 // import TrainingWordId from "../TrainingWord/TrainingWord.jsx";
 
 const RegisterPage = lazy(() =>
@@ -121,7 +123,11 @@ export default function App() {
                     redirectTo="/login"
                   />
                 }
-              />
+              >
+                <Route index element={<Navigate to="description" replace />} />
+                <Route path="description" element={<Description />} />
+                <Route path="reviews" element={<Reviews />} />
+              </Route>
               <Route
                 path="/statistics"
                 element={

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { addProduct, fetchProducts } from "../../redux/products/operations";
+import { fetchProducts } from "../../redux/products/operations";
 import {
   selectProducts,
   selectError,
@@ -16,10 +16,12 @@ import css from "./Products.module.css";
 import { PaginatedItems } from "../PaginatedItems/PaginatedItems";
 import { openModal } from "../../redux/modal/slice";
 import { selectActiveModal } from "../../redux/modal/selectors";
-import DeleteProductModal from "../AddProduct/DeleteProduct";
-import EditProductModal from "../AddProduct/EditProduct";
-import { showError, showSuccess } from "../ToastComponent/ToastComponent";
+import { showError } from "../ToastComponent/ToastComponent";
 import Filters from "../Filters/Filters";
+import Card from "../Card/Card";
+import ConfirmProductModal from "../AddProduct/Confirmproduct";
+import { Toaster } from "react-hot-toast";
+import { setSelectedProduct } from "../../redux/products/slice";
 
 export default function AllMedicine() {
   const dispatch = useDispatch();
@@ -36,22 +38,21 @@ export default function AllMedicine() {
   }, [dispatch]);
 
   const handleAddToShop = (product) => {
-    const formData = new FormData();
-    const { _id, id, ...addValue } = product;
+    const {
+      shopId: shopProductId,
+      userId: userProductId,
+      createdAt,
+      updatedAt,
+      ...productCorp
+    } = product;
 
-    Object.entries(addValue).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    shopProductId !== shopId
+      ? dispatch(openModal({ type: "confirmProduct", product: productCorp }))
+      : showError({ message: "You have the product in your shop" });
+  };
 
-    dispatch(addProduct({ shopId, newProduct: formData }))
-      .unwrap()
-      .then(() => {
-        showSuccess({ message: "The product has been added" });
-        handleClose();
-      })
-      .catch(() => {
-        showError({ message: "Was error, please try again" });
-      });
+  const handleSelectProduct = (product) => {
+    dispatch(setSelectedProduct(product));
   };
 
   return (
@@ -63,30 +64,8 @@ export default function AllMedicine() {
           {products
             .filter((product) => product._id)
             .map((product) => (
-              <li key={product._id} className={css.card}>
-                <div className={css.photo}>
-                  {product.photo ? (
-                    <img
-                      src={product.photo}
-                      alt={`${product.name} image`}
-                      className={css.img}
-                      width="200"
-                    />
-                  ) : (
-                    <img
-                      src="/drug.png"
-                      alt={`${product.name} image`}
-                      className={css.altImg}
-                    />
-                  )}
-                </div>
-
-                <div className={css.text}>
-                  <div className={css.pill}>
-                    <p className={css.namePrice}>{product.name}</p>
-                    <p className={css.namePrice}>৳{product.price}</p>
-                  </div>
-                  <p className={css.category}>{product.category}</p>
+              <li key={product._id}>
+                <Card product={product}>
                   <div className={css.btnMed}>
                     <button
                       onClick={() => handleAddToShop(product)}
@@ -95,11 +74,16 @@ export default function AllMedicine() {
                     >
                       Add to shop
                     </button>
-                    <NavLink to="/medicine" className={css.navLinks}>
+                    <NavLink
+                      to="/medicine"
+                      className={css.navLinks}
+                      onClick={() => handleSelectProduct(product)}
+                    >
                       Details
                     </NavLink>
                   </div>
-                </div>
+                </Card>
+                <Toaster />
               </li>
             ))}
         </ul>
@@ -114,11 +98,9 @@ export default function AllMedicine() {
       </div>
 
       {isError && <ErrorMessage />}
-      {activeModal?.type == "detalisProduct" && (
-        <DeleteProductModal product={activeModal.product} />
-      )}
-      {activeModal?.type == "addToShop" && (
-        <EditProductModal product={activeModal.product} />
+
+      {activeModal?.type == "confirmProduct" && (
+        <ConfirmProductModal productCorp={activeModal.product} />
       )}
     </>
   );

@@ -1,16 +1,67 @@
-.teachersContainer {
-height: 100hv;
- background: #F8F8F8;
-
+.pageCower {
+padding: 0 10px 80px;
+display: flex;
+flex-direction: column;
+row-gap: 8px;
+justify-content: center;
 } 
 
-.txtNoFound {
-  margin: 20px auto;
-  padding: 20px;
+.addInfo{
+  border-radius: 27px;
+background:var(--text-color-white);
+padding: 20px 20px 40px 20px;
+
+}
+.btnBlock {
+  display: inline-flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.btnInfo {
+  display: flex;
+padding: 8px 25px;
+  border-radius: 24px;
+  background: var(--btn-green-light);
+  border: none;
+  color: var(--btn-green);
+  font-family: Inter;
+  font-size: 14px;
   font-weight: 500;
-  font-size: 28px;
-  line-height: 1.14286;
-  letter-spacing: -0.02em;
-  color: var(--text-color-main);
-width: 400px;
+}
+
+.btnInfo:hover,
+.btnInfo:focus,
+.btnInfo:active {
+  background: var(--btn-green);
+  border: none;
+  color: var(--fon);
+}
+
+@media screen and (min-width: 768px) {
+  .pageCower {
+padding: 0 10px 120px;
+row-gap: 16px;
+} 
+.addInfo{
+  padding: 32px;
+}
+.btnBlock{
+  margin-bottom: 32px;
+}
+}
+
+@media screen and (min-width: 1440px) {
+.pageCower{
+flex-direction: row;
+  column-gap: 20px;
+}
+.addInfo{
+  width: 800px;
+  min-height: 709px;
+  padding: 40px 40px 80px;
+}
+.btnBlock{
+  margin-bottom: 40px;
+}
 }

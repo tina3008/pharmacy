@@ -40,9 +40,9 @@
   -webkit-box-shadow: var(--text-color-white);
 }
 .field::placeholder {
-    color: var(--text-grey); 
+  color: var(--text-grey);
   opacity: 1;
-    background-color: var(--text-color-white);
+  background-color: var(--text-color-white);
 }
 option:checked {
   background-color: var(--btn-green);
@@ -61,21 +61,21 @@ option:checked {
   background-color: transparent;
   margin-right: 8px;
 }
-.filtersBtn{
-color: #FFF;
-font-family: Inter;
-font-size: 14px;
-font-weight: 500;
-line-height: 1.3;
-width: 116px;
-height: 44px;
-border-radius: 60px;
-display: inline-flex;
-justify-content: center;
-align-items: center;
-border: none;
-background-color: var(--btn-green);
-margin-left: 0;
+.filtersBtn {
+  color: #fff;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  width: 116px;
+  height: 44px;
+  border-radius: 60px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: var(--btn-green);
+  margin-left: 0;
 }
 
 .filtersBtn:focus,
@@ -89,21 +89,20 @@ margin-left: 0;
     flex-direction: column;
     width: 100%;
   }
-
 }
 @media screen and (min-width: 768px) {
   .filtersBlock {
-    flex-direction: row;  
-    justify-content: left;  
+    flex-direction: row;
+    justify-content: left;
     gap: 14px;
   }
-   .fieldPosition:first-child {
-    width: 214px; 
+  .fieldPosition:first-child {
+    width: 214px;
   }
-    .fieldPosition:nth-child(2) {
+  .fieldPosition:nth-child(2) {
     width: 224px;
   }
-  .filtersBtn{
+  .filtersBtn {
     margin-left: -6px;
   }
 }
@@ -111,7 +110,7 @@ margin-left: 0;
   .filtersBlock {
     gap: 8px;
   }
-  .filtersBtn{
+  .filtersBtn {
     margin-left: 0;
   }
 }

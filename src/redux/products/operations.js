@@ -44,6 +44,7 @@ export const fetchCategories = createAsyncThunk(
 export const addProduct = createAsyncThunk(
   "products/create",
   async ({ shopId, newProduct }, thunkAPI) => {
+
     try {
       const response = await axios.post(
         `/shop/${shopId}/product/add`,
