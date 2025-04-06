@@ -44,6 +44,7 @@ export default function Reviews() {
   return (
     <>
       {loading && <Loader />}
+      {reviews ? (
       <ul className={css.list}>
         {reviews.map((review) => (
           <li key={review._id} className={css.review}>
@@ -53,18 +54,17 @@ export default function Reviews() {
           </li>
         ))}
       </ul>
-
+      ):( <p className={css.txt}>Haven't any reviwes</p>)}
       {totalPage > 1 && (
         <div className={css.pagination}>
           <PaginatedItems
             items={reviews}
             totalPage={totalPage}
             currentPage={currentPage}
-            fetchAction={(page) => allReviews({productId, page, perPage: 3 })}
+            fetchAction={(page) => allReviews({ productId, page, perPage: 3 })}
           />
         </div>
       )}
-
       {isError && <ErrorMessage />}
     </>
   );

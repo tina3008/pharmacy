@@ -1,0 +1,51 @@
+.alert{
+  width: 100%;
+  height: 23px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.05;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alert.expense {
+  background-color: rgba(232, 80, 80, 0.10);
+  color:#E85050;
+}
+
+.alert.income {
+  background-color: rgba(89, 177, 122, 0.10);
+  color: #59B17A;
+}
+.alert.error {
+  background-color: rgba(29, 30, 33, 0.10);
+  color: var(--text-color-main);
+}
+
+.amount{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+}
+
+.amount.expense {
+  color:#E85050;
+}
+
+.amount.income {
+  color: #59B17A;
+}
+.amount.error {
+  color: var(--text-color-main);
+  text-decoration: line-through;
+}
+
+@media screen and (min-width: 768px){
+  .alert{
+    height: 25px;
+    font-size: 14px;
+  }
+}

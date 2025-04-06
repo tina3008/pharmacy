@@ -16,6 +16,7 @@ import { modalReducer } from "./modal/slice";
 import authReducer from "./auth/slice";
 import { productsReducer } from "./products/slice";
 import { reviewsReducer } from "./reviews/slice";
+import { statisticsReducer } from "./statistics/slice";
 
 const authPersistConfig = {
   key: "auth",
@@ -34,6 +35,7 @@ export const store = configureStore({
     products: productsReducer,
     categories: categoriesReducer,
     reviews: reviewsReducer,
+    statistics: statisticsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
