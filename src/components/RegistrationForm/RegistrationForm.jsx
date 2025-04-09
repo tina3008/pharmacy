@@ -13,11 +13,11 @@ import CowerForm from "./CowerForm/CowerForm.jsx";
 const validationControl = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too Short!")
-    .max(50, "Too Long!")
+    .max(30, "Too Long!")
     .required("Required"),
   email: Yup.string()
     .min(3, " Too Short!")
-    .max(50, "Too Long!")
+    .max(30, "Too Long!")
     .required("Required"),
   phone: Yup.string()
     .matches(/^[+\d][\d\s()-]*$/, "Invalid phone format")
