@@ -44,7 +44,7 @@ export default function RegistrationForm() {
       .then((data) => {
         showSuccess({ message: "Registration successful!" });
         actions.resetForm();
-        navigate("/shop");
+        navigate("/create-shop");
       })
       .catch((err) => {
         showError({ message: `Registration failed: ${err.toString()}` });

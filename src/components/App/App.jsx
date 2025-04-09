@@ -10,7 +10,6 @@ import { refreshUser } from "../../redux/auth/operations.js";
 import { selectIsRefreshing } from "../../redux/auth/selectors.js";
 import Description from "../Product/Description/Description.jsx";
 import Reviews from "../Product/Reviews/Reviews.jsx";
-// import TrainingWordId from "../TrainingWord/TrainingWord.jsx";
 
 const RegisterPage = lazy(() =>
   import("../../pages/RegisterPage/RegisterPage.jsx")
@@ -139,9 +138,6 @@ export default function App() {
                   />
                 }
               />
-
-              {/* <Route path="/training/:id" element={<TrainingWordId />} /> */}
-
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
