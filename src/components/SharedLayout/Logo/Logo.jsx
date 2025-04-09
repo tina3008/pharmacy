@@ -11,7 +11,7 @@ export default function Logo() {
     <>
       {isLoggedin ? (
         <NavLink to="/" className={css.logo}>
-          <img src="/public/LogoShirt.png" alt="logo" className="css.imgLogo" />
+          <img src="/LogoShirt.png" alt="logo" className="css.imgLogo" />
           <p className="css.txtLogo">E-Pharmacy</p>
         </NavLink>
       ) : (
