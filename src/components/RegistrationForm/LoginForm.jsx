@@ -14,15 +14,10 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const validationControl = Yup.object().shape({
     email: Yup.string()
-      .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "Invalid email format")
       .min(3, " Too Short!")
       .max(50, "Too Long!")
       .required("Required"),
     password: Yup.string()
-      .matches(
-        /^(?=.*[a-zA-Z]{6})(?=.*\d)[a-zA-Z\d]{7}$/,
-        "Invalid password format"
-      )
       .min(5, "Too short")
       .max(18, "Too long")
       .required("Required"),

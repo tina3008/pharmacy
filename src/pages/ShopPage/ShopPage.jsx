@@ -26,7 +26,7 @@ export default function ShopPage() {
   useEffect(() => {
     dispatch(allShops());
   }, [dispatch]);
-
+{shop1&& dispatch(setCurrentShopId(shop1._id))};
   const classLink = ({ isActive }) => {
     return `${css.normalLink} ${isActive ? css.activeLink : ""}`;
   };

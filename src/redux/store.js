@@ -21,7 +21,7 @@ import { statisticsReducer } from "./statistics/slice";
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token"],
+  whitelist: ["token", "shopId"],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
