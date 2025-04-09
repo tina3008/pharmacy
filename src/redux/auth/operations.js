@@ -18,8 +18,6 @@ const token = localStorage.getItem("token");
 if (token) {
   setAuthHeader(token);
 }
-// =============
-
 const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
 };
@@ -29,7 +27,9 @@ export const register = createAsyncThunk(
   async (newUser, thunkAPI) => {
     try {
       const res = await axios.post("/user/register", newUser);
-      setAuthHeader(res.data.token);
+      console.log("operation:", res.data);
+      
+      setAuthHeader(res.data.data.accessToken);
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -52,19 +52,11 @@ export const login = createAsyncThunk(
   }
 );
 
-// export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
-//   try {
-//     await axios.post("/user/logout");
-//     clearAuthHeader();
-//   } catch (error) {
-//     return thunkAPI.rejectWithValue(error.message);
-//   }
-// });
 
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/user/logout");
-    localStorage.removeItem("token"); // Удаляем токен
+    localStorage.removeItem("token"); 
     setAuthHeader(null);
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
