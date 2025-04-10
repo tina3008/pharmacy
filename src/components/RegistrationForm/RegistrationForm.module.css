@@ -113,3 +113,8 @@ input:-webkit-autofill:active {
     margin-left: 0;
   }
 }
+@media screen and (min-width: 1440px) {
+  .formLogin{
+    margin-left: 96px;
+  }
+}

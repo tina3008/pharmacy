@@ -2,7 +2,7 @@
   background: var(--fon);
   margin: 0 auto;
   font-family: Inter;
-    overflow: hidden;
+  overflow: hidden;
 }
 .headerLogin,
 .coverHeader {
@@ -14,9 +14,8 @@
 .coverLogin {
   display: block;
   margin: 0 auto;
-  padding: auto 10px;
+  padding: auto 10px 0;
   min-height: 50vh;
- 
 }
 
 @media screen and (max-width: 374px) {
@@ -49,18 +48,17 @@
 }
 @media screen and (min-width: 1440px) {
   .coverMain {
-    width: 1204px;  
+    width: 1204px;
   }
-  .coverLogin{
-    width: 1242px;  
+  .coverLogin {
+    width: 1242px;
   }
   .coverHeader {
     margin-bottom: 36px;
     width: 1204px;
   }
-  .headerLogin{
-   margin-bottom: 110px;
-    width: 1252px; 
-
+  .headerLogin {
+    margin-bottom: 110px;
+    width: 1252px;
   }
 }

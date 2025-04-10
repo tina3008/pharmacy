@@ -47,7 +47,7 @@ export default function LoginForm() {
         validationSchema={validationControl}
       >
         {({ errors, touched }) => (
-          <Form className={css.form} autoComplete="off">
+          <Form className={css.formLogin} autoComplete="off">
             <div className={css.loginStyle}>
               <div className={css.fieldPosition}>
                 <Field
