@@ -3,6 +3,7 @@
   margin: 0 auto;
   font-family: Inter;
   overflow: hidden;
+
 }
 .headerLogin,
 .coverHeader {
@@ -14,10 +15,14 @@
 .coverLogin {
   display: block;
   margin: 0 auto;
-  padding: auto 10px 0;
-  min-height: 50vh;
+  padding: auto 10px 0;   
 }
-
+.coverMain{
+ min-height:calc(100vh - 430px);
+}
+.coverLogin{
+  min-height:calc(100vh - 142px);
+}
 @media screen and (max-width: 374px) {
   .coverMain,
   .coverLogin {

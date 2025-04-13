@@ -65,8 +65,6 @@ const shopSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.items.push(action.payload);
-        console.log("action.payload-", action.payload);
-        console.log("state.items--", state.items);
       })
       .addCase(addShop.rejected, (state, action) => {
         state.isLoading = false;
@@ -78,7 +76,6 @@ const shopSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(changeShop.fulfilled, (state, action) => {
-        console.log("action.payload", action.payload);
         state.isLoading = false;
         state.error = null;
         state.items.push(action.payload);

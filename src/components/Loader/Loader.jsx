@@ -6,7 +6,7 @@ import { Oval
 export default function Loader() {
   return (
     <div className={css.loaderContainer}>
-      render(
+
       <Oval
         visible={true}
         height="80"
@@ -16,7 +16,7 @@ export default function Loader() {
         wrapperStyle={{}}
         wrapperClass=""
       />
-      )<p>Loading data, please wait...</p>
+   
     </div>
   );
 }

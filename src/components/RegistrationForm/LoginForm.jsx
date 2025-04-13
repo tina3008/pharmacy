@@ -73,9 +73,9 @@ export default function LoginForm() {
                   type="password"
                   name="password"
                   className={`${css.field} ${
-                    errors && touched
+                    errors.password && touched.password
                       ? css.errorField
-                      : touched && !errors
+                      : touched.password && !errors.password
                       ? css.successField
                       : ""
                   }`}

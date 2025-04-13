@@ -62,7 +62,6 @@ export const getProductById = createAsyncThunk(
   async ({ shopId, productId }, thunkAPI) => {
     try {
       const response = await axios.get(`/shop/${shopId}/product/${productId}`);
-      console.log("response.data id-", response.data);
 
       return response.data;
     } catch (error) {

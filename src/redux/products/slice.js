@@ -36,7 +36,7 @@ const productsSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.items = action.payload.data.data;
-        state.totalPage = action.payload.data.totalPages;         
+        state.totalPage = action.payload.data.totalPages;
         state.currentPage = action.payload.data.page;
       })
       .addCase(allProducts.rejected, (state, action) => {
@@ -58,34 +58,6 @@ const productsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      // .addCase(fetchCategory.pending, (state) => {
-      //   state.error = false;
-      //   state.isLoading = true;
-      // })
-      // .addCase(fetchCategory.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = null;
-      //   state.items = action.payload.data.data;
-
-      // })
-      // .addCase(fetchCategory.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload;
-      // })
-      // .addCase(getProductById.pending, (state) => {
-      //   state.error = false;
-      //   state.isLoading = true;
-      // })
-      // .addCase(getProductById.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = null;
-      //   state.item = action.payload.data;
-      //   console.log("state.item", state.item);
-      // })
-      // .addCase(getProductById.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload;
-      // })
 
       .addCase(addProduct.pending, (state) => {
         state.error = false;

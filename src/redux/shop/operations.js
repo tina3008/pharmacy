@@ -43,12 +43,9 @@ export const addShop = createAsyncThunk(
   async (newShop, thunkAPI) => {
     try {
       const response = await axios.post("/shop/create", newShop);
-      console.log("response.data-", response.data);
-
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-

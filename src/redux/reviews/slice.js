@@ -26,8 +26,6 @@ const reviewsSlice = createSlice({
         state.items = action.payload.data.data;
         state.totalPage = action.payload.data.totalPages;
         state.currentPage = action.payload.data.page;
-        console.log("action.payload", action.payload);
-        console.log("state.totalPage", state.totalPage);
       })
       .addCase(allReviews.rejected, (state, action) => {
         state.isLoading = false;

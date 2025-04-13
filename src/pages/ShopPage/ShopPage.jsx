@@ -9,7 +9,7 @@ import {
 } from "../../redux/shop/selectors";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Loader from "../../components/Loader/Loader";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { setCurrentShopId } from "../../redux/shop/slice";
 import { openModal } from "../../redux/modal/slice";
 import { selectActiveModal } from "../../redux/modal/selectors";
@@ -44,7 +44,7 @@ export default function ShopPage() {
     <div className={css.shopPage}>
       {loading && <Loader />}
 
-      {shop1 && (
+      {shop1 ? (
         <>
           <div className={css.shopInfo}>
             <h2 className={css.shopTitle}>{shop1.name}</h2>
@@ -93,6 +93,10 @@ export default function ShopPage() {
           </ul>
           <Outlet />
         </>
+      ) : (
+        <NavLink to="/create-shop" className={classLink}>
+          Please register your shop
+        </NavLink>
       )}
       {isError && <ErrorMessage />}
       {activeModal === "addProduct" && <AddProductModal />}

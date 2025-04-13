@@ -8,7 +8,6 @@ export const allReviews = createAsyncThunk(
       const response = await axios.get(
         `/products/${productId}/review?page=${page}&perPage=${perPage}`
       );
-      console.log("response.data", response.data);
 
       return response.data;
     } catch (error) {
