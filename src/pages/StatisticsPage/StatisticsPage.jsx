@@ -31,11 +31,11 @@ export default function StatisticsPage() {
   const totalPage = useSelector(selectIOMoneysTotalPage);
   const currentPage = useSelector(selectIOMoneysCurrentPage);
 
- useEffect(() => {
-   if (shopId) {
-     dispatch(allStatistics({ shopId, page: 1 }));
-   }
- }, [dispatch, shopId]);
+  useEffect(() => {
+    if (shopId) {
+      dispatch(allStatistics({ shopId, page: 1 }));
+    }
+  }, [dispatch, shopId]);
 
   return (
     <div className={css.position}>
@@ -46,23 +46,24 @@ export default function StatisticsPage() {
       </div>
       <div className={css.tablePosition}>
         <div className={css.table}>
-          {clients.length > 0 && <RecentCustomers clients={clients} />}
+          <RecentCustomers clients={clients} />
         </div>
         <div className={css.table}>
-          {moneys.length > 0 && (
-            <IncomeExpenses
-              moneys={moneys}
-              totalPage={totalPage}
-              currentPage={currentPage}
-            />
-          )}
+          <IncomeExpenses
+            moneys={moneys}
+            totalPage={totalPage}
+            currentPage={currentPage}
+          />
+
           <div className={css.pagination}>
-            <PaginatedItems
-              items={moneys}
-              totalPage={totalPage}
-              currentPage={currentPage}
-              fetchAction={(page) => allStatistics({ shopId, page })}
-            />
+            {totalPage > 1 && (
+              <PaginatedItems
+                items={moneys}
+                totalPage={totalPage}
+                currentPage={currentPage}
+                fetchAction={(page) => allStatistics({ shopId, page })}
+              />
+            )}
           </div>
         </div>
       </div>

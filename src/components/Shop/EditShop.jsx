@@ -45,9 +45,7 @@ export default function EditShop() {
           This information will be displayed publicly so be careful what you
           share.
         </p>
-      </div>
-      <p>{shopId}</p>
-      <p>{shop.name}</p>
+      </div>  
       <Formik
         initialValues={{
           name: shop.name || "",

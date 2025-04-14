@@ -21,12 +21,14 @@ export default function RecentCustomers({ clients }) {
   const handleOrder = (client) => {
     dispatch(openModal({ type: "order", client }));
     console.log("client**", client);
-    
   };
 
-
   if (!clients || clients.length === 0) {
-    return <p>No data available</p>;
+    return <div className={css.customersBlock}>
+      <h3 className={css.customersTitle}>RecentCustomers </h3>
+      <div className={css.tablePosition}>
+      </div>
+      </div>
   }
   const [
     {
@@ -36,8 +38,6 @@ export default function RecentCustomers({ clients }) {
       client: { _id, phone },
     },
   ] = clients;
-
-
 
   const columns = useMemo(
     () => [
@@ -96,34 +96,36 @@ export default function RecentCustomers({ clients }) {
     <div className={css.customersBlock}>
       <h3 className={css.customersTitle}>RecentCustomers </h3>
       <div className={css.tablePosition}>
-        <table className={css.table}>
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className={css.tableRow}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id} className={css.head}>
-                    {typeof header.column.columnDef.header === "function"
-                      ? header.column.columnDef.header()
-                      : header.column.columnDef.header}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className={css.tableRow}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className={css.cell}>
-                    {cell.column.columnDef.cell
-                      ? cell.column.columnDef.cell(cell)
-                      : cell.getValue()}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {clients.length > 0 && (
+          <table className={css.table}>
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id} className={css.tableRow}>
+                  {headerGroup.headers.map((header) => (
+                    <th key={header.id} className={css.head}>
+                      {typeof header.column.columnDef.header === "function"
+                        ? header.column.columnDef.header()
+                        : header.column.columnDef.header}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id} className={css.tableRow}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className={css.cell}>
+                      {cell.column.columnDef.cell
+                        ? cell.column.columnDef.cell(cell)
+                        : cell.getValue()}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
         {isError && <ErrorMessage />}
 

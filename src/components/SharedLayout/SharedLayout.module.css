@@ -21,7 +21,7 @@
  min-height:calc(100vh - 430px);
 }
 .coverLogin{
-  min-height:calc(100vh - 142px);
+  min-height:calc(100vh - 128px);
 }
 @media screen and (max-width: 374px) {
   .coverMain,

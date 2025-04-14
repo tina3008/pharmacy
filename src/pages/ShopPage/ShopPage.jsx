@@ -44,7 +44,7 @@ export default function ShopPage() {
     <div className={css.shopPage}>
       {loading && <Loader />}
 
-      {shop1 ? (
+      {shop1._id ? (
         <>
           <div className={css.shopInfo}>
             <h2 className={css.shopTitle}>{shop1.name}</h2>

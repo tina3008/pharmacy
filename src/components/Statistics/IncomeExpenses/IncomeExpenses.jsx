@@ -47,23 +47,24 @@ export default function IncomeExpenses({ moneys, totalPage, currentPage }) {
       <h3 className={css.customersTitle}>Income/Expenses </h3>
       <div className={css.tablePosition}>
         <h4 className={css.dayTitle}>Today </h4>
-        <table className={css.table}>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className={css.tableRow}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className={css.cell}>
-                    {cell.column.columnDef.cell
-                      ? cell.column.columnDef.cell(cell)
-                      : cell.getValue()}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {moneys.length > 0 && (
+          <table className={css.table}>
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id} className={css.tableRow}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className={css.cell}>
+                      {cell.column.columnDef.cell
+                        ? cell.column.columnDef.cell(cell)
+                        : cell.getValue()}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
-       
     </div>
   );
 }

@@ -30,7 +30,7 @@ export default function DrugStore() {
   const activeModal = useSelector(selectActiveModal);
 
   useEffect(() => {
-    dispatch(allProducts({ shopId, page: 1 }));    
+    dispatch(allProducts({ shopId, page: 1 }));
   }, [dispatch, shopId]);
 
   const handleDelete = (product) => {
@@ -70,15 +70,16 @@ export default function DrugStore() {
             ))}
         </ul>
       )}
-
       {isError && <ErrorMessage />}
       <div className={css.pagination}>
-        <PaginatedItems
-          items={products}
-          totalPage={totalPage}
-          currentPage={currentPage}
-          fetchAction={(page) => allProducts({ shopId, page })}
-        />
+        {totalPage>1 && (
+          <PaginatedItems
+            items={products}
+            totalPage={totalPage}
+            currentPage={currentPage}
+            fetchAction={(page) => allProducts({ shopId, page })}
+          />
+        )}
       </div>
 
       {activeModal?.type == "deleteProduct" && (
